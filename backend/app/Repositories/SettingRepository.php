@@ -3,8 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Setting;
+use App\Repositories\Contracts\SettingRepositoryInterface;
 
-class SettingRepository extends BaseRepository
+class SettingRepository extends BaseRepository implements SettingRepositoryInterface
 {
   public function __construct(Setting $model)
   {

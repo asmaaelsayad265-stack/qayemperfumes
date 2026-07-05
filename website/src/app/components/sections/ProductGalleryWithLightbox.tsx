@@ -1,7 +1,6 @@
 "use client";
 
 import LightboxGallery from "./LightboxGallery";
-import type { ReactNode } from "react";
 
 export default function ProductGalleryWithLightbox({
   images,
@@ -14,4 +13,3 @@ export default function ProductGalleryWithLightbox({
     </div>
   );
 }
-

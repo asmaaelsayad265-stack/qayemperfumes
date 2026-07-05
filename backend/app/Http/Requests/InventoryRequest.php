@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class InventoryRequest extends FormRequest
 {
@@ -13,9 +14,11 @@ class InventoryRequest extends FormRequest
 
   public function rules(): array
   {
+    $inventoryId = $this->route('id');
+
     return [
       'product_id' => 'required|exists:products,id',
-      'sku' => 'required|string|max:255|unique:inventory,sku',
+      'sku' => ['required', 'string', 'max:255', Rule::unique('inventory', 'sku')->ignore($inventoryId)],
       'variant' => 'nullable|string|max:255',
       'quantity' => 'required|integer|min:0',
       'reserved' => 'integer|min:0',

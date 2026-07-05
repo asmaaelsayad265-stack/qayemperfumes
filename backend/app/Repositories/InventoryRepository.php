@@ -14,7 +14,7 @@ class InventoryRepository extends BaseRepository implements InventoryRepositoryI
 
   public function getLowStockItems()
   {
-    return $this->model->where('quantity', '<=', 'low_stock_threshold')->get();
+    return $this->model->whereColumn('quantity', '<=', 'low_stock_threshold')->get();
   }
 
   public function getOutOfStockItems()

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import LightboxGallery from "./LightboxGallery";
 import PerfumeNotes from "./PerfumeNotes";
 import ProductNotesVisualizer from "./ProductNotesVisualizer";
@@ -35,21 +35,21 @@ export default function QuickViewModal({
 }) {
   const [activeSize, setActiveSize] = useState(mockProduct.sizes[0]);
 
-  useEffect(() => {
-    if (!open) return;
+  const handleClose = useCallback(() => {
     setActiveSize(mockProduct.sizes[0]);
-  }, [open]);
+    onClose();
+  }, [onClose]);
 
   const badges = useMemo(() => mockProduct.badges, []);
 
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") handleClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
+  }, [open, handleClose]);
 
   if (!open) return null;
 
@@ -59,7 +59,7 @@ export default function QuickViewModal({
       role="dialog"
       aria-modal="true"
       onMouseDown={(e) => {
-        if (e.target === e.currentTarget) onClose();
+        if (e.target === e.currentTarget) handleClose();
       }}
     >
       <div className="w-full max-w-5xl overflow-hidden rounded-3xl border border-gold/15 bg-bg1/60 shadow-luxury">
@@ -70,7 +70,7 @@ export default function QuickViewModal({
           </div>
           <button
             type="button"
-            onClick={onClose}
+            onClick={handleClose}
             className="rounded-2xl border border-gold/25 bg-bg0/30 px-4 py-2 text-xs font-semibold text-text transition hover:border-gold/50"
           >
             إغلاق
@@ -138,7 +138,7 @@ export default function QuickViewModal({
               </button>
               <button
                 type="button"
-                onClick={onClose}
+                onClick={handleClose}
                 className="rounded-2xl border border-gold/25 bg-bg1/30 px-4 py-3 text-sm font-semibold text-text transition hover:border-gold/50"
               >
                 تابع التفاصيل
@@ -150,4 +150,3 @@ export default function QuickViewModal({
     </div>
   );
 }
-
