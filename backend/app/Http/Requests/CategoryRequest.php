@@ -22,7 +22,12 @@ class CategoryRequest extends FormRequest
       'slug' => ['required', 'string', 'max:255', Rule::unique('categories', 'slug')->ignore($categoryId)],
       'description_ar' => 'nullable|string',
       'description_en' => 'nullable|string',
-      'image' => 'nullable|string|max:255',
+      'image' => [
+        'nullable',
+        'string',
+        'max:255',
+        'regex:/^(\/[A-Za-z0-9._~\/-]+\.(jpg|jpeg|png|webp|avif)|https:\/\/[^\s]+\.(jpg|jpeg|png|webp|avif))$/i',
+      ],
       'sort_order' => 'integer|min:0',
       'is_active' => 'boolean',
     ];

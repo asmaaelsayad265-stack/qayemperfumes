@@ -31,7 +31,12 @@ class ProductRequest extends FormRequest
       'is_featured' => 'boolean',
       'is_best_seller' => 'boolean',
       'is_limited_edition' => 'boolean',
-      'image' => 'nullable|string|max:255',
+      'image' => [
+        'nullable',
+        'string',
+        'max:255',
+        'regex:/^(\/[A-Za-z0-9._~\/-]+\.(jpg|jpeg|png|webp|avif)|https:\/\/[^\s]+\.(jpg|jpeg|png|webp|avif))$/i',
+      ],
     ];
   }
 }

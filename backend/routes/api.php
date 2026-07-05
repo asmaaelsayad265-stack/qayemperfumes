@@ -52,31 +52,31 @@ Route::prefix('v1')->group(function () {
     // Orders
     Route::get('/orders', [OrderController::class, 'index']);
     Route::post('/orders', [OrderController::class, 'store']);
-    Route::get('/orders/{id}', [OrderController::class, 'show']);
-    Route::put('/orders/{id}', [OrderController::class, 'update']);
-    Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
     Route::get('/orders/status/{status}', [OrderController::class, 'byStatus']);
     Route::get('/orders/customer/{customerId}', [OrderController::class, 'byCustomer']);
     Route::get('/orders/recent', [OrderController::class, 'recent']);
+    Route::get('/orders/{id}', [OrderController::class, 'show']);
+    Route::put('/orders/{id}', [OrderController::class, 'update']);
+    Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
 
     // Customers
     Route::get('/customers', [CustomerController::class, 'index']);
     Route::post('/customers', [CustomerController::class, 'store']);
+    Route::get('/customers/vip', [CustomerController::class, 'vip']);
+    Route::get('/customers/email/{email}', [CustomerController::class, 'byEmail']);
     Route::get('/customers/{id}', [CustomerController::class, 'show']);
     Route::put('/customers/{id}', [CustomerController::class, 'update']);
     Route::delete('/customers/{id}', [CustomerController::class, 'destroy']);
-    Route::get('/customers/vip', [CustomerController::class, 'vip']);
-    Route::get('/customers/email/{email}', [CustomerController::class, 'byEmail']);
 
     // Inventory
     Route::get('/inventory', [InventoryController::class, 'index']);
     Route::post('/inventory', [InventoryController::class, 'store']);
-    Route::get('/inventory/{id}', [InventoryController::class, 'show']);
-    Route::put('/inventory/{id}', [InventoryController::class, 'update']);
-    Route::delete('/inventory/{id}', [InventoryController::class, 'destroy']);
     Route::get('/inventory/low-stock', [InventoryController::class, 'lowStock']);
     Route::get('/inventory/out-of-stock', [InventoryController::class, 'outOfStock']);
     Route::get('/inventory/sku/{sku}', [InventoryController::class, 'bySku']);
+    Route::get('/inventory/{id}', [InventoryController::class, 'show']);
+    Route::put('/inventory/{id}', [InventoryController::class, 'update']);
+    Route::delete('/inventory/{id}', [InventoryController::class, 'destroy']);
 
     // Reviews
     Route::post('/reviews', [ReviewController::class, 'store'])->middleware('throttle:10,1');

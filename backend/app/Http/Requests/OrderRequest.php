@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class OrderRequest extends FormRequest
 {
@@ -13,8 +14,15 @@ class OrderRequest extends FormRequest
 
   public function rules(): array
   {
+    $orderId = $this->route('id');
+
     return [
-      'order_number' => 'required|string|max:255|unique:orders,order_number',
+      'order_number' => [
+        'required',
+        'string',
+        'max:255',
+        Rule::unique('orders', 'order_number')->ignore($orderId),
+      ],
       'customer_id' => 'required|exists:customers,id',
       'total' => 'required|numeric|min:0',
       'status' => 'required|in:new,preparing,shipped,completed,canceled',

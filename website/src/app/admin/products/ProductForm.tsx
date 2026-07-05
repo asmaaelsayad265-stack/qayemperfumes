@@ -11,6 +11,18 @@ const inputClass =
 
 const labelClass = "mb-1 block text-xs font-medium text-muted";
 const maxImageSizeBytes = 5 * 1024 * 1024;
+const allowedImageTypes = new Set(["image/jpeg", "image/png", "image/webp", "image/avif"]);
+
+function sanitizeImageFileName(fileName: string): string {
+  const extension = fileName.split(".").pop()?.toLowerCase() ?? "jpg";
+  const baseName = fileName
+    .replace(/\.[^.]+$/, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  return `${baseName || "product-image"}.${extension}`;
+}
 
 function buildInitialProduct(product?: Product): ProductPayload {
   return {
@@ -75,7 +87,7 @@ export default function ProductForm({
       return;
     }
 
-    if (!file.type.startsWith("image/")) {
+    if (!allowedImageTypes.has(file.type)) {
       setError("يرجى اختيار ملف صورة صالح.");
       event.target.value = "";
       return;
@@ -87,7 +99,7 @@ export default function ProductForm({
       return;
     }
 
-    const nextImage = `/uploads/products/${file.name}`;
+    const nextImage = `/uploads/products/${sanitizeImageFileName(file.name)}`;
     setError(null);
     setSuccess("تم تجهيز معاينة الصورة بنجاح.");
     updateField("image", nextImage);

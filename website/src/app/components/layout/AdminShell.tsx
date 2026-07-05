@@ -37,6 +37,7 @@ export default function AdminShell({
       {sidebarOpen && (
         <div
           className="fixed inset-0 z-30 bg-black/60 lg:hidden"
+          aria-hidden="true"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -102,6 +103,8 @@ export default function AdminShell({
         {/* Topbar */}
         <header className="flex h-16 items-center justify-between border-b border-gold/10 bg-bg1 px-4 lg:px-6">
           <button
+            type="button"
+            aria-label="فتح قائمة الإدارة"
             className="flex items-center gap-2 text-sm text-muted hover:text-text lg:hidden"
             onClick={() => setSidebarOpen(true)}
           >
@@ -143,7 +146,7 @@ export default function AdminShell({
         </header>
 
         {/* Page content */}
-        <main className="flex-1 p-4 lg:p-6">{children}</main>
+        <main id="admin-main-content" className="flex-1 p-4 lg:p-6">{children}</main>
       </div>
     </div>
   );
