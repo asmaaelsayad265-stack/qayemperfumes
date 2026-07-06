@@ -16,6 +16,14 @@ export default function HeroSection() {
       <div className="pointer-events-none absolute left-[18%] top-[14%] h-72 w-72 rounded-full bg-gold/15 blur-[130px] animate-[pulse_8s_ease-in-out_infinite]" />
       <div className="pointer-events-none absolute right-[8%] top-[18%] h-80 w-80 rounded-full bg-white/10 blur-[150px] animate-[pulse_10s_ease-in-out_infinite]" />
 
+      <div className="absolute left-5 top-1/2 hidden -translate-y-1/2 lg:block" aria-hidden="true">
+        <div className="rounded-full border border-gold/15 bg-bg0/30 px-3 py-5 backdrop-blur-xl opacity-30">
+          <div className="writing-vertical text-[10px] font-semibold tracking-[0.42em] text-gold/70">
+            ドラゴンダイブ
+          </div>
+        </div>
+      </div>
+
       <div className="relative z-10 grid min-h-[calc(100vh-7rem)] gap-10 px-6 py-10 sm:px-10 sm:py-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:px-14 lg:py-16">
         <div className="space-y-8 animate-fade-in-up stagger-1">
           <div className="inline-flex items-center gap-3 rounded-full border border-gold/20 bg-bg1/55 px-5 py-2.5 text-xs font-semibold backdrop-blur-xl shadow-luxury">

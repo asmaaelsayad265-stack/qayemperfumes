@@ -102,8 +102,8 @@ export default function BrandHeader() {
       >
         <div className="flex h-full flex-col p-6 luxury-grain">
           <div className="mb-8 rounded-[1.5rem] border border-gold/12 bg-bg1/35 p-5">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold/80">ドラゴンダイブ</div>
-            <div className="mt-2 text-lg font-bold text-text">Brand navigation</div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold/80">قَيَّم للعطور</div>
+            <div className="mt-2 text-lg font-bold text-text">تصفّح العطور</div>
           </div>
           <nav className="flex flex-col gap-6">
             {navLinks.map((link) => {
