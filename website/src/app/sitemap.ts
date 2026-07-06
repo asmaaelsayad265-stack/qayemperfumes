@@ -50,6 +50,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/perfumes/women",
     "/perfumes/unisex",
     "/perfumes/best-sellers",
+    "/offers",
     "/perfumes/special-editions",
     "/perfumes/summer",
     "/perfumes/winter",

@@ -1,24 +1,12 @@
-# Stage 5: Backend Architecture & Real Data Layer
+# TODO
 
-## 5.1 Migrations, Models & Relationships
-- [x] Create Laravel project structure (composer.json, artisan, configs)
-- [ ] Create users migration + model with Sanctum roles (admin/manager)
-- [ ] Create categories migration + model
-- [ ] Create products migration + model
-- [ ] Create product_images migration + model
-- [ ] Create product_notes migration + model
-- [ ] Create product_variants migration + model
-- [ ] Create reviews migration + model
-- [ ] Create customers migration + model
-- [ ] Create orders migration + model
-- [ ] Create order_items migration + model
-- [ ] Create inventory migration + model
-- [ ] Create settings migration + model
-- [ ] Define all model relationships
-- [ ] Create database seeder with initial data
+## Planned increment
+1. UI polish & a11y/perf fixes for: `website/src/app/perfumes/women/page.tsx` only.
+2. Add Next.js `loading` fallback + better skeleton semantics.
+3. Improve i18n/SEO basics (page H1, accessible loading/error regions).
+4. Reduce layout shifts and avoid unnecessary state work.
+5. Run `npm run lint` and `npm run build` (website) to ensure no type errors.
 
-## 5.2 Controllers, API Resources & Validation
+## Progress
+- Not started
 
-## 5.3 Sanctum Authentication
-
-## 5.4 Analytics Services

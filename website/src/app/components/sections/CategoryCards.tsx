@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Card from "../ui/Card";
+import ScrollReveal from "./ScrollReveal";
 import { categoriesApi, Category } from "@/services/categories";
 
 export default function CategoryCards() {
@@ -29,33 +30,15 @@ export default function CategoryCards() {
 
   if (loading) {
     return (
-      <section className="space-y-4">
-        <div className="flex items-end justify-between gap-4">
-          <div className="space-y-1">
-            <h2 className="text-xl font-bold tracking-tight">التصنيفات</h2>
-            <p className="text-sm text-muted">Loading...</p>
-          </div>
+      <section className="space-y-8">
+        <div className="flex flex-col items-center justify-center space-y-2 text-center">
+          <h2 className="text-3xl font-extrabold tracking-tight text-text">التصنيفات</h2>
+          <p className="text-sm text-muted">جاري التحميل...</p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {[...Array(6)].map((_, i) => (
-            <Card
-              key={i}
-              className={
-                "group relative overflow-hidden transition " +
-                (i % 2 === 0
-                  ? "bg-gradient-to-b from-gold/10 to-surface/60"
-                  : "bg-gradient-to-b from-surface/50 to-bg1/20")
-              }
-            >
-              <div className="relative flex items-center justify-between gap-3">
-                <div>
-                  <div className="h-3 w-16 animate-pulse rounded bg-gray-800" />
-                  <div className="mt-2 h-4 w-24 animate-pulse rounded bg-gray-800" />
-                </div>
-                <div className="rounded-xl border border-gold/20 bg-bg0/30 p-2">
-                  <span className="block h-2 w-2 rounded-full bg-gold" />
-                </div>
-              </div>
+            <Card key={i} className="h-28 animate-pulse bg-bg1/40 border border-gold/10 rounded-[2rem]">
+              <></>
             </Card>
           ))}
         </div>
@@ -65,55 +48,72 @@ export default function CategoryCards() {
 
   if (error) {
     return (
-      <section className="space-y-4">
-        <div className="flex items-end justify-between gap-4">
-          <div className="space-y-1">
-            <h2 className="text-xl font-bold tracking-tight">التصنيفات</h2>
-            <p className="text-sm text-red-400">Error: {error}</p>
-          </div>
+      <section className="space-y-8">
+        <div className="flex flex-col items-center justify-center space-y-2 text-center">
+          <h2 className="text-3xl font-extrabold tracking-tight text-text">التصنيفات</h2>
         </div>
-        <div className="rounded-lg border border-red-900/50 bg-red-950/20 p-8 text-center">
-          <p className="text-muted">Unable to load categories. Please try again later.</p>
+        <div className="rounded-[2rem] border border-red-900/50 bg-red-950/20 p-8 text-center backdrop-blur-sm" role="alert" aria-live="polite">
+          <p className="text-muted">نعتذر، تعذر تحميل التصنيفات. يرجى المحاولة لاحقاً.</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (categories.length === 0) {
+    return (
+      <section className="space-y-8">
+        <div className="flex flex-col items-center justify-center space-y-2 text-center">
+          <h2 className="text-3xl font-extrabold tracking-tight text-text">عائلات <span className="text-gold font-light">العطور</span></h2>
+          <p className="text-sm text-muted">اكتشف العطر الذي يطابق شخصيتك ومزاجك</p>
+        </div>
+        <div className="rounded-[2rem] border border-gold/15 bg-surface/70 p-10 text-center">
+          <p className="text-muted">لا توجد تصنيفات متاحة حالياً.</p>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="space-y-4">
-      <div className="flex items-end justify-between gap-4">
-        <div className="space-y-1">
-          <h2 className="text-xl font-bold tracking-tight">التصنيفات</h2>
-          <p className="text-sm text-muted">Luxury categories</p>
+    <section className="space-y-10 relative">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-gold/10 pb-6">
+        <div className="space-y-2 text-center md:text-right">
+          <h2 className="text-3xl font-extrabold tracking-tight text-text">
+            عائلات <span className="text-gold font-light">العطور</span>
+          </h2>
+          <p className="text-sm text-muted">اكتشف العطر الذي يطابق شخصيتك ومزاجك</p>
         </div>
-        <div className="gold-shimmer text-sm font-semibold">
-          اكتشف مزاجك
+        <div className="hidden md:block">
+          <span className="gold-shimmer text-sm font-semibold px-4 py-2 rounded-full border border-gold/20 bg-gold/5">
+            Explore Collections
+          </span>
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {categories.map((category, idx) => (
-          <Link key={category.id} href={`/perfumes/${category.slug}`}>
-            <Card
-              className={
-                "group relative overflow-hidden transition " +
-                (idx % 2 === 0
-                  ? "bg-gradient-to-b from-gold/10 to-surface/60"
-                  : "bg-gradient-to-b from-surface/50 to-bg1/20")
-              }
-            >
-              <div className="absolute -left-10 -top-10 h-24 w-24 rounded-full bg-gold/15 blur-2xl opacity-0 transition group-hover:opacity-100" />
-              <div className="relative flex items-center justify-between gap-3">
-                <div>
-                  <div className="text-xs font-semibold text-gold">{category.slug}</div>
-                  <div className="mt-1 text-base font-bold">{category.name_ar}</div>
+          <ScrollReveal key={category.id}>
+            <Link href={`/perfumes/${category.slug}`} className="group block">
+              <Card
+                className={
+                  "relative overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-luxury rounded-[2rem] p-6 " +
+                  (idx % 2 === 0
+                    ? "bg-gradient-to-br from-gold/5 to-bg1/80 border border-gold/20 hover:border-gold/40"
+                    : "bg-gradient-to-tr from-bg0 to-bg1/90 border border-gold/10 hover:border-gold/30")
+                }
+              >
+                <div className="absolute -left-10 -top-10 h-32 w-32 rounded-full bg-gold/10 blur-3xl opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+                <div className="relative flex items-center justify-between gap-4">
+                  <div>
+                    <div className="text-xs font-semibold tracking-widest text-gold uppercase mb-1">{category.slug}</div>
+                    <div className="text-xl font-bold text-text group-hover:text-gold transition-colors">{category.name_ar}</div>
+                  </div>
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-gold/20 bg-bg0/40 shadow-inner transition-transform duration-500 group-hover:scale-110 group-hover:bg-gold/10">
+                    <span className="block h-2.5 w-2.5 rounded-full bg-gold group-hover:animate-ping" />
+                  </div>
                 </div>
-                <div className="rounded-xl border border-gold/20 bg-bg0/30 p-2 transition group-hover:border-gold-2">
-                  <span className="block h-2 w-2 rounded-full bg-gold" />
-                </div>
-              </div>
-            </Card>
-          </Link>
+              </Card>
+            </Link>
+          </ScrollReveal>
         ))}
       </div>
     </section>

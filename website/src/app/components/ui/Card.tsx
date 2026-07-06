@@ -6,7 +6,7 @@ export default function Card({
   className?: string;
 }) {
   return (
-    <div className={`rounded-2xl border border-gold/15 bg-surface/70 p-4 ${className}`}>
+    <div className={`luxury-card luxury-card-hover rounded-3xl border border-gold/15 p-4 ${className}`}>
       {children}
     </div>
   );

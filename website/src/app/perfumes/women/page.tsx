@@ -14,93 +14,105 @@ export default function PerfumesWomenPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchData = async () => {
       try {
         setLoading(true);
         setError(null);
-        const womenCategory = await categoriesApi.getBySlug('women');
-        if (womenCategory) {
+        const womenCategory = await categoriesApi.getBySlug("women");
+        if (womenCategory && isMounted) {
           const productsData = await productsApi.getByCategory(womenCategory.id);
-          setProducts(productsData);
+          if (isMounted) setProducts(productsData);
         }
       } catch (err) {
+        if (!isMounted) return;
         setError(err instanceof Error ? err.message : "Failed to load products");
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
+
     fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  if (loading) {
-    return (
-      <PublicShell>
-        <div className="space-y-8">
-          <HeroSection />
-          <SearchFilterBar />
-          <section>
-            <div className="flex items-end justify-between gap-4">
-              <div className="space-y-1">
-                <h1 className="text-2xl font-extrabold">عطور نسائية</h1>
-                <p className="text-sm text-muted">Loading...</p>
-              </div>
-            </div>
-            <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {[...Array(12)].map((_, i) => (
-                <div key={i} className="h-64 animate-pulse rounded-lg bg-gradient-to-br from-gray-900 to-black" />
-              ))}
-            </div>
-          </section>
-        </div>
-      </PublicShell>
-    );
-  }
-
-  if (error) {
-    return (
-      <PublicShell>
-        <div className="space-y-8">
-          <HeroSection />
-          <SearchFilterBar />
-          <section>
-            <div className="flex items-end justify-between gap-4">
-              <div className="space-y-1">
-                <h1 className="text-2xl font-extrabold">عطور نسائية</h1>
-                <p className="text-sm text-red-400">Error: {error}</p>
-              </div>
-            </div>
-            <div className="rounded-lg border border-red-900/50 bg-red-950/20 p-8 text-center">
-              <p className="text-muted">Unable to load products. Please try again later.</p>
-            </div>
-          </section>
-        </div>
-      </PublicShell>
-    );
-  }
+  const title = "عطور نسائية";
+  const subtitle = error
+    ? "تعذر تحميل المنتجات. حاول مرة أخرى لاحقًا."
+    : `${products.length} خيار`;
 
   return (
     <PublicShell>
       <div className="space-y-8">
         <HeroSection />
         <SearchFilterBar />
-        <section>
-          <div className="flex items-end justify-between gap-4">
+
+        <section aria-labelledby="women-products-title">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div className="space-y-1">
-              <h1 className="text-2xl font-extrabold">عطور نسائية</h1>
-              <p className="text-sm text-muted">{products.length} products</p>
+              <h1 id="women-products-title" className="text-2xl font-extrabold">
+                {title}
+              </h1>
+
+              {loading ? (
+                <p className="text-sm text-muted" aria-live="polite">
+                  جاري التحميل...
+                </p>
+              ) : error ? (
+                <p className="text-sm text-red-400" aria-live="polite">
+                  {error}
+                </p>
+              ) : (
+                <p className="text-sm text-muted" aria-live="polite">
+                  {products.length} منتج
+                </p>
+              )}
             </div>
-            <div className="rounded-2xl border border-gold/15 bg-bg1/30 px-4 py-2 text-xs font-semibold text-gold">
-              {products.length} خيار
+
+            <div
+              className="rounded-2xl border border-gold/15 bg-bg1/30 px-4 py-2 text-xs font-semibold text-gold"
+              aria-hidden={loading ? true : undefined}
+            >
+              {loading ? "" : subtitle}
             </div>
           </div>
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+
+          {loading ? (
+            <div
+              className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+              aria-busy="true"
+              aria-live="polite"
+            >
+              {[...Array(12)].map((_, i) => (
+                <div
+                  key={i}
+                  className="h-64 animate-pulse rounded-lg bg-gradient-to-br from-gray-900 to-black"
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
+          ) : error ? (
+            <div
+              className="mt-6 rounded-lg border border-red-900/50 bg-red-950/20 p-8 text-center"
+              role="alert"
+            >
+              <p className="text-muted">{subtitle}</p>
+            </div>
+          ) : (
+            <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
         </section>
       </div>
     </PublicShell>
   );
 }
+
 

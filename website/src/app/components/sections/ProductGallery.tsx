@@ -13,15 +13,16 @@ export default function ProductGallery() {
 
   return (
     <div className="space-y-4">
-      <div className="overflow-hidden rounded-3xl border border-gold/15 bg-bg1/40">
-        <div className="aspect-[4/3] w-full">
+      <div className="overflow-hidden rounded-[2rem] border border-gold/15 bg-[linear-gradient(180deg,rgba(17,17,17,0.92),rgba(11,11,11,0.96))] p-2 shadow-luxury">
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.5rem]">
           <Image
             src={images[active]}
             alt=""
             width={1200}
             height={900}
-            className="h-full w-full object-cover opacity-95 transition duration-500 hover:opacity-100"
+            className="h-full w-full object-cover opacity-95 transition duration-700 hover:scale-[1.02] hover:opacity-100"
           />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_50%,rgba(5,5,5,0.82))]" />
         </div>
       </div>
 

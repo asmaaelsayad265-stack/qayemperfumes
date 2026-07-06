@@ -96,3 +96,172 @@ a {
   transform: translateY(0);
 }
 
+/* ================================================================
+   Step 1 — Luxury UI Polish: animations, utilities, scrollbar
+   ================================================================ */
+
+/* Smooth page scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Gold selection highlight */
+::selection {
+  background: rgba(200, 162, 74, 0.3);
+  color: #f5f5f5;
+}
+
+/* Elegant thin scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-0);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(200, 162, 74, 0.25);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(200, 162, 74, 0.45);
+}
+
+/* Gold pulse glow — subtle CTA attention */
+@keyframes goldPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(200, 162, 74, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(200, 162, 74, 0);
+  }
+}
+.gold-pulse {
+  animation: goldPulse 2.4s ease-in-out infinite;
+}
+
+/* Fade in up entrance */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes loadingSweep {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+@keyframes softFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Staggered entrance delays */
+.stagger-1 { animation-delay: 0.08s; }
+.stagger-2 { animation-delay: 0.16s; }
+.stagger-3 { animation-delay: 0.24s; }
+.stagger-4 { animation-delay: 0.32s; }
+.stagger-5 { animation-delay: 0.4s; }
+
+/* Glass panel — frosted glass surface */
+.glass-panel {
+  background: rgba(17, 17, 17, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(200, 162, 74, 0.1);
+}
+
+.luxury-grain {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(227, 199, 119, 0.12), transparent 28%),
+    radial-gradient(circle at 80% 12%, rgba(200, 162, 74, 0.15), transparent 24%),
+    radial-gradient(circle at 50% 100%, rgba(168, 121, 62, 0.14), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0));
+}
+
+.luxury-orb {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.32), transparent 35%),
+    radial-gradient(circle at center, rgba(200, 162, 74, 0.16), transparent 68%);
+  filter: blur(2px);
+}
+
+.luxury-card {
+  background:
+    linear-gradient(180deg, rgba(17, 17, 17, 0.82), rgba(11, 11, 11, 0.94));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 24px 64px rgba(0, 0, 0, 0.36);
+}
+
+.luxury-card-hover {
+  transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 350ms ease,
+    box-shadow 350ms ease,
+    background 350ms ease;
+}
+
+.luxury-card-hover:hover {
+  transform: translateY(-6px);
+}
+
+.text-shadow-soft {
+  text-shadow: 0 0 20px rgba(200, 162, 74, 0.18);
+}
+
+.writing-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Luxury gradient border */
+.luxury-border-gradient {
+  position: relative;
+}
+.luxury-border-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(200, 162, 74, 0.35), transparent 40%, rgba(200, 162, 74, 0.15));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* WhatsApp floating button pulse */
+@keyframes whatsappRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+.whatsapp-ring {
+  animation: whatsappRing 2s ease-out infinite;
+}
+

@@ -18,6 +18,13 @@ export const metadata: Metadata = {
     template: "%s | QAYEM Perfumes",
   },
   description: "عطور فاخرة بتجربة عربية راقية من قَيَّم للعطور.",
+  keywords: [
+    "QAYEM Perfumes",
+    "قَيَّم للعطور",
+    "luxury perfume",
+    "عطور فاخرة",
+    "perfume store",
+  ],
   alternates: {
     canonical: "/",
   },
@@ -28,12 +35,22 @@ export const metadata: Metadata = {
     title: "قَيَّم للعطور | QAYEM Perfumes",
     description: "عطور فاخرة بتجربة عربية راقية من قَيَّم للعطور.",
     url: siteUrl,
+    images: [
+      {
+        url: `${siteUrl}/file.svg`,
+        width: 1200,
+        height: 630,
+        alt: "QAYEM Perfumes luxury fragrance experience",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "قَيَّم للعطور | QAYEM Perfumes",
     description: "عطور فاخرة بتجربة عربية راقية من قَيَّم للعطور.",
+    images: [`${siteUrl}/file.svg`],
   },
+  themeColor: "#050505",
   robots: {
     index: true,
     follow: true,
