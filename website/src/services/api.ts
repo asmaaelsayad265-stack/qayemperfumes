@@ -19,7 +19,22 @@ export interface ApiResource<T> {
   data: T;
 }
 
-export function unwrapResource<T>(payload: T | ApiResource<T>): T {
+export interface PaginatedResponse<T> {
+  data: T[];
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+}
+
+// Overloads preserve the caller's expected shape:
+//   - single resource  -> returns the resource
+//   - paginated list    -> returns the array
+//   - bare/non-matching -> returns the original payload
+export function unwrapResource<T>(payload: ApiResource<T>): T;
+export function unwrapResource<T>(payload: PaginatedResponse<T>): T[];
+export function unwrapResource<T>(payload: T): T;
+export function unwrapResource<T>(payload: T | ApiResource<T> | PaginatedResponse<T>): T | T[] {
   if (
     payload &&
     typeof payload === 'object' &&
@@ -27,6 +42,15 @@ export function unwrapResource<T>(payload: T | ApiResource<T>): T {
     Object.keys(payload as unknown as Record<string, unknown>).length === 1
   ) {
     return (payload as ApiResource<T>).data;
+  }
+
+  if (
+    payload &&
+    typeof payload === 'object' &&
+    'data' in payload &&
+    ('current_page' in payload || 'last_page' in payload)
+  ) {
+    return (payload as PaginatedResponse<T>).data;
   }
 
   return payload as T;
@@ -79,17 +103,28 @@ const apiClient: AxiosInstance = axios.create({
 // Request interceptor
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // Add auth token if available
-    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
+    // Add auth token if available (guard against localStorage SecurityError)
+    let token: string | null = null;
+
+    if (typeof window !== 'undefined') {
+      try {
+        token = localStorage.getItem('auth_token');
+      } catch {
+        token = null;
+      }
+    }
+
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
   (error: AxiosError) => {
     return Promise.reject(error);
   }
 );
+
 
 // Response interceptor
 apiClient.interceptors.response.use(

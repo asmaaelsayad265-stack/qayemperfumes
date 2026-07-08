@@ -31,6 +31,7 @@ class OrderController extends Controller
   public function show(int $id)
   {
     $order = $this->orderService->find($id);
+    abort_if(!$order, 404);
     return new OrderResource($order);
   }
 

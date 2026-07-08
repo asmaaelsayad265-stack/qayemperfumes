@@ -6,12 +6,17 @@ import Card from "../ui/Card";
 import ScrollReveal from "./ScrollReveal";
 import { categoriesApi, Category } from "@/services/categories";
 
-export default function CategoryCards() {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function CategoryCards({ initialCategories }: { initialCategories?: Category[] }) {
+  const [categories, setCategories] = useState<Category[]>(initialCategories || []);
+  const [loading, setLoading] = useState(!initialCategories);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // If initial data was provided server-side, skip client fetch
+    if (initialCategories && initialCategories.length > 0) {
+      return;
+    }
+
     const fetchCategories = async () => {
       try {
         setLoading(true);
@@ -26,7 +31,7 @@ export default function CategoryCards() {
     };
 
     fetchCategories();
-  }, []);
+  }, [initialCategories]);
 
   if (loading) {
     return (

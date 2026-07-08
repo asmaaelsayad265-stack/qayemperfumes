@@ -46,15 +46,18 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "قَيَّم للعطور | QAYEM Perfumes",
-    description: "عطور فاخرة بتجربة عربية راقية من قَيَّم للعطور.",
+    title: "قَيَّم للعطور | QAYEM Perfumes",
+    description: "عطور فاخرة بتجربة عربية راقية من قَيَّم للعطور.",
     images: [`${siteUrl}/file.svg`],
   },
-  themeColor: "#050505",
   robots: {
     index: true,
     follow: true,
   },
+};
+
+export const viewport = {
+  themeColor: "#050505",
 };
 
 const organizationSchema = {
@@ -84,3 +87,4 @@ export default function RootLayout({
     </html>
   );
 }
+

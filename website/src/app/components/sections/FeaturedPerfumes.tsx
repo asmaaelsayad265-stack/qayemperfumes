@@ -6,12 +6,17 @@ import ProductCard from "../ProductCard";
 import ScrollReveal from "./ScrollReveal";
 import { productsApi, Product } from "@/services/products";
 
-export default function FeaturedPerfumes() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function FeaturedPerfumes({ initialProducts }: { initialProducts?: Product[] }) {
+  const [products, setProducts] = useState<Product[]>(initialProducts || []);
+  const [loading, setLoading] = useState(!initialProducts);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // If initial data was provided server-side, skip client fetch
+    if (initialProducts && initialProducts.length > 0) {
+      return;
+    }
+
     const fetchFeaturedProducts = async () => {
       try {
         setLoading(true);
@@ -26,7 +31,7 @@ export default function FeaturedPerfumes() {
     };
 
     fetchFeaturedProducts();
-  }, []);
+  }, [initialProducts]);
 
   if (loading) {
     return (

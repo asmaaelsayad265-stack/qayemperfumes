@@ -17,13 +17,18 @@ class AuthController extends Controller
         'orders:manage',
         'customers:manage',
         'inventory:manage',
-        'analytics:view',
+        'categories:manage',
+        'reviews:manage',
         'settings:manage',
+        'analytics:view',
       ],
       'manager' => [
         'products:manage',
         'orders:manage',
+        'customers:manage',
         'inventory:manage',
+        'categories:manage',
+        'reviews:manage',
         'analytics:view',
       ],
       default => [],
@@ -69,8 +74,10 @@ class AuthController extends Controller
 
   public function refresh(Request $request)
   {
-    $request->user()->currentAccessToken()->delete();
-    $token = $request->user()->createToken('api-token')->plainTextToken;
+    $user = $request->user();
+    $abilities = $this->getAbilitiesForRole($user->role);
+    $user->currentAccessToken()->delete();
+    $token = $user->createToken('api-token', $abilities)->plainTextToken;
 
     return response()->json([
       'token' => $token,

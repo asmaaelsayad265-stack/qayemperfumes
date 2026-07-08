@@ -9,7 +9,7 @@ class CustomerRequest extends FormRequest
 {
   public function authorize(): bool
   {
-    return true;
+    return $this->user()?->tokenCan('customers:manage') ?? false;
   }
 
   public function rules(): array

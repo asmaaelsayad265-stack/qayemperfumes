@@ -8,7 +8,7 @@ class ReviewRequest extends FormRequest
 {
   public function authorize(): bool
   {
-    return true;
+    return $this->user()?->tokenCan('reviews:manage') ?? false;
   }
 
   public function rules(): array

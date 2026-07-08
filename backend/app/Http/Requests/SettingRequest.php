@@ -8,7 +8,7 @@ class SettingRequest extends FormRequest
 {
   public function authorize(): bool
   {
-    return true;
+    return $this->user()?->tokenCan('settings:manage') ?? false;
   }
 
   public function rules(): array

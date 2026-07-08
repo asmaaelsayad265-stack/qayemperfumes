@@ -6,7 +6,10 @@ import LuxuryTestimonials from "./components/sections/LuxuryTestimonials";
 import CategoryCards from "./components/sections/CategoryCards";
 import OffersSection from "./components/sections/OffersSection";
 
-export default function Home() {
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
+
   return (
     <PublicShell>
       <div className="space-y-24 md:space-y-32 pb-24">
@@ -33,5 +36,3 @@ export default function Home() {
     </PublicShell>
   );
 }
-
-

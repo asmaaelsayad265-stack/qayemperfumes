@@ -40,62 +40,62 @@ Route::prefix('v1')->group(function () {
   // Protected routes (require authentication)
   Route::middleware('auth:sanctum')->group(function () {
     // Products
-    Route::post('/products', [ProductController::class, 'store']);
-    Route::put('/products/{id}', [ProductController::class, 'update']);
-    Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+    Route::post('/products', [ProductController::class, 'store'])->middleware('throttle:write');
+    Route::put('/products/{id}', [ProductController::class, 'update'])->middleware('throttle:write');
+    Route::delete('/products/{id}', [ProductController::class, 'destroy'])->middleware('throttle:write');
 
     // Categories
-    Route::post('/categories', [CategoryController::class, 'store']);
-    Route::put('/categories/{id}', [CategoryController::class, 'update']);
-    Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
+    Route::post('/categories', [CategoryController::class, 'store'])->middleware('throttle:write');
+    Route::put('/categories/{id}', [CategoryController::class, 'update'])->middleware('throttle:write');
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->middleware('throttle:write');
 
     // Orders
-    Route::get('/orders', [OrderController::class, 'index']);
-    Route::post('/orders', [OrderController::class, 'store']);
-    Route::get('/orders/status/{status}', [OrderController::class, 'byStatus']);
-    Route::get('/orders/customer/{customerId}', [OrderController::class, 'byCustomer']);
-    Route::get('/orders/recent', [OrderController::class, 'recent']);
-    Route::get('/orders/{id}', [OrderController::class, 'show']);
-    Route::put('/orders/{id}', [OrderController::class, 'update']);
-    Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
+    Route::get('/orders', [OrderController::class, 'index'])->middleware('throttle:api');
+    Route::post('/orders', [OrderController::class, 'store'])->middleware('throttle:write');
+    Route::get('/orders/status/{status}', [OrderController::class, 'byStatus'])->middleware('throttle:api');
+    Route::get('/orders/customer/{customerId}', [OrderController::class, 'byCustomer'])->middleware('throttle:api');
+    Route::get('/orders/recent', [OrderController::class, 'recent'])->middleware('throttle:api');
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->middleware('throttle:api');
+    Route::put('/orders/{id}', [OrderController::class, 'update'])->middleware('throttle:write');
+    Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->middleware('throttle:write');
 
     // Customers
-    Route::get('/customers', [CustomerController::class, 'index']);
-    Route::post('/customers', [CustomerController::class, 'store']);
-    Route::get('/customers/vip', [CustomerController::class, 'vip']);
-    Route::get('/customers/email/{email}', [CustomerController::class, 'byEmail']);
-    Route::get('/customers/{id}', [CustomerController::class, 'show']);
-    Route::put('/customers/{id}', [CustomerController::class, 'update']);
-    Route::delete('/customers/{id}', [CustomerController::class, 'destroy']);
+    Route::get('/customers', [CustomerController::class, 'index'])->middleware('throttle:api');
+    Route::post('/customers', [CustomerController::class, 'store'])->middleware('throttle:write');
+    Route::get('/customers/vip', [CustomerController::class, 'vip'])->middleware('throttle:api');
+    Route::get('/customers/email/{email}', [CustomerController::class, 'byEmail'])->middleware('throttle:api');
+    Route::get('/customers/{id}', [CustomerController::class, 'show'])->middleware('throttle:api');
+    Route::put('/customers/{id}', [CustomerController::class, 'update'])->middleware('throttle:write');
+    Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->middleware('throttle:write');
 
     // Inventory
-    Route::get('/inventory', [InventoryController::class, 'index']);
-    Route::post('/inventory', [InventoryController::class, 'store']);
-    Route::get('/inventory/low-stock', [InventoryController::class, 'lowStock']);
-    Route::get('/inventory/out-of-stock', [InventoryController::class, 'outOfStock']);
-    Route::get('/inventory/sku/{sku}', [InventoryController::class, 'bySku']);
-    Route::get('/inventory/{id}', [InventoryController::class, 'show']);
-    Route::put('/inventory/{id}', [InventoryController::class, 'update']);
-    Route::delete('/inventory/{id}', [InventoryController::class, 'destroy']);
+    Route::get('/inventory', [InventoryController::class, 'index'])->middleware('throttle:api');
+    Route::post('/inventory', [InventoryController::class, 'store'])->middleware('throttle:write');
+    Route::get('/inventory/low-stock', [InventoryController::class, 'lowStock'])->middleware('throttle:api');
+    Route::get('/inventory/out-of-stock', [InventoryController::class, 'outOfStock'])->middleware('throttle:api');
+    Route::get('/inventory/sku/{sku}', [InventoryController::class, 'bySku'])->middleware('throttle:api');
+    Route::get('/inventory/{id}', [InventoryController::class, 'show'])->middleware('throttle:api');
+    Route::put('/inventory/{id}', [InventoryController::class, 'update'])->middleware('throttle:write');
+    Route::delete('/inventory/{id}', [InventoryController::class, 'destroy'])->middleware('throttle:write');
 
     // Reviews
-    Route::post('/reviews', [ReviewController::class, 'store'])->middleware('throttle:10,1');
-    Route::put('/reviews/{id}', [ReviewController::class, 'update']);
-    Route::delete('/reviews/{id}', [ReviewController::class, 'destroy']);
-    Route::get('/reviews/pending', [ReviewController::class, 'pending']);
+    Route::post('/reviews', [ReviewController::class, 'store'])->middleware('throttle:write');
+    Route::put('/reviews/{id}', [ReviewController::class, 'update'])->middleware('throttle:write');
+    Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->middleware('throttle:write');
+    Route::get('/reviews/pending', [ReviewController::class, 'pending'])->middleware('throttle:api');
 
     // Settings
-    Route::get('/settings', [SettingController::class, 'index']);
-    Route::post('/settings', [SettingController::class, 'store']);
-    Route::get('/settings/{id}', [SettingController::class, 'show']);
-    Route::put('/settings/{id}', [SettingController::class, 'update']);
-    Route::delete('/settings/{id}', [SettingController::class, 'destroy']);
-    Route::get('/settings/key/{key}', [SettingController::class, 'byKey']);
-    Route::get('/settings/group/{group}', [SettingController::class, 'byGroup']);
+    Route::get('/settings', [SettingController::class, 'index'])->middleware('throttle:api');
+    Route::post('/settings', [SettingController::class, 'store'])->middleware('throttle:write');
+    Route::get('/settings/{id}', [SettingController::class, 'show'])->middleware('throttle:api');
+    Route::put('/settings/{id}', [SettingController::class, 'update'])->middleware('throttle:write');
+    Route::delete('/settings/{id}', [SettingController::class, 'destroy'])->middleware('throttle:write');
+    Route::get('/settings/key/{key}', [SettingController::class, 'byKey'])->middleware('throttle:api');
+    Route::get('/settings/group/{group}', [SettingController::class, 'byGroup'])->middleware('throttle:api');
 
     // Analytics
-    Route::get('/analytics/dashboard', [AnalyticsController::class, 'dashboard']);
-    Route::get('/analytics/sales', [AnalyticsController::class, 'sales']);
-    Route::get('/analytics/top-products', [AnalyticsController::class, 'topProducts']);
+    Route::get('/analytics/dashboard', [AnalyticsController::class, 'dashboard'])->middleware('throttle:api');
+    Route::get('/analytics/sales', [AnalyticsController::class, 'sales'])->middleware('throttle:api');
+    Route::get('/analytics/top-products', [AnalyticsController::class, 'topProducts'])->middleware('throttle:api');
   });
 });

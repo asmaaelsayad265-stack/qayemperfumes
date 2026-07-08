@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const apiOrigin = (() => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL as string | undefined;
 
   if (!apiUrl?.startsWith("http")) {
     return "'self'";
@@ -16,7 +16,7 @@ const apiOrigin = (() => {
 
 const scriptSrc = [
   "'self'",
-  process.env.NODE_ENV === "development" ? "'unsafe-eval'" : "",
+  (process.env.NODE_ENV as string) === "development" ? "'unsafe-eval'" : "",
 ].filter(Boolean);
 
 const contentSecurityPolicy = [
@@ -50,7 +50,19 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
+        hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "*.amazonaws.com",
+      },
+      {
+        protocol: "https",
+        hostname: "qayem-perfumes.example",
+      },
+      {
+        protocol: "https",
+        hostname: "*.qayem-perfumes.example",
       },
     ],
   },

@@ -1,0 +1,55 @@
+
+> website@0.1.0 build
+> next build
+
+▲ Next.js 16.2.10 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 45s
+  Running TypeScript ...
+  Finished TypeScript in 25.5s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/26) ...
+  Generating static pages using 3 workers (6/26) 
+  Generating static pages using 3 workers (12/26) 
+  Generating static pages using 3 workers (19/26) 
+✓ Generating static pages using 3 workers (26/26) in 3.4s
+  Finalizing page optimization ...
+
+Route (app)                     Revalidate  Expire
+┌ ƒ /
+├ ○ /_not-found
+├ ○ /about
+├ ○ /admin/analytics
+├ ○ /admin/categories
+├ ƒ /admin/categories/[id]
+├ ○ /admin/categories/create
+├ ○ /admin/customers
+├ ƒ /admin/customers/[id]
+├ ○ /admin/dashboard
+├ ○ /admin/inventory
+├ ○ /admin/orders
+├ ƒ /admin/orders/[id]
+├ ○ /admin/products
+├ ƒ /admin/products/[id]
+├ ○ /admin/products/create
+├ ○ /cart
+├ ○ /checkout
+├ ○ /contact
+├ ○ /offers
+├ ○ /perfumes/best-sellers
+├ ○ /perfumes/men
+├ ○ /perfumes/special-editions
+├ ○ /perfumes/summer
+├ ○ /perfumes/winter
+├ ○ /perfumes/women
+├ ƒ /product/[slug]
+├ ○ /reviews
+├ ○ /robots.txt
+└ ○ /sitemap.xml                        1h      1y
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

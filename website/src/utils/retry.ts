@@ -29,9 +29,10 @@ export async function retryWithBackoff<T>(
       return await fn();
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
-      
-      // Don't retry on client errors (4xx)
-      if (lastError.message.includes('4')) {
+
+      const status = (lastError as { status?: number }).status;
+      // Don't retry on client errors (4xx) or auth errors
+      if (typeof status === 'number' && status >= 400 && status < 500) {
         throw lastError;
       }
 
@@ -66,7 +67,7 @@ export function createRetryFetch() {
 
     return retryWithBackoff(async () => {
       const response = await fetch(url, options);
-      
+
       if (!response.ok) {
         const error = new Error(`HTTP ${response.status}: ${response.statusText}`);
         (error as { status?: number }).status = response.status;

@@ -31,6 +31,7 @@ class CustomerController extends Controller
   public function show(int $id)
   {
     $customer = $this->customerService->find($id);
+    abort_if(!$customer, 404);
     return new CustomerResource($customer);
   }
 
@@ -54,6 +55,7 @@ class CustomerController extends Controller
   public function byEmail(string $email)
   {
     $customer = $this->customerService->getByEmail($email);
+    abort_if(!$customer, 404);
     return new CustomerResource($customer);
   }
 }

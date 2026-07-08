@@ -17,6 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'throttle:api' => \Illuminate\Routing\Middleware\ThrottleRequests::class . ':60,1',
+            'throttle:write' => \Illuminate\Routing\Middleware\ThrottleRequests::class . ':30,1',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
