@@ -16,6 +16,9 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  // Do not render placeholders or demo content when real product is not provided
+  if (!product) return null;
+
   const badge = product?.is_best_seller 
     ? mockBadges[0] 
     : product?.is_limited_edition 
@@ -40,7 +43,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted">
-              {product ? product.category?.name_ar || "Perfume" : "Mock perfume"}
+              {product ? product.category?.name_ar || "Perfume" : ""}
             </div>
           </div>
           <div className="shrink-0">
@@ -71,7 +74,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="min-w-0">
             <div className="truncate text-base font-bold text-text transition-colors group-hover:text-gold">{productName}</div>
             <div className="mt-1 text-xs text-muted">
-              {product ? "Luxury scent profile" : "إضافة إلى السلة — Mock"}
+              {"Luxury scent profile"}
             </div>
           </div>
 
@@ -95,5 +98,3 @@ export default function ProductCard({ product }: ProductCardProps) {
     </article>
   );
 }
-
-
