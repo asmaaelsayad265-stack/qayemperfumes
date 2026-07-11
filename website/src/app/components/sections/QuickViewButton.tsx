@@ -3,7 +3,7 @@
 import { useState } from "react";
 import QuickViewModal from "./QuickViewModal";
 
-export default function QuickViewButton() {
+export default function QuickViewButton({ productId }: { productId?: number }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -16,8 +16,7 @@ export default function QuickViewButton() {
         Quick View
       </button>
 
-      <QuickViewModal open={open} onClose={() => setOpen(false)} />
+      <QuickViewModal open={open} onClose={() => setOpen(false)} productId={productId} />
     </>
   );
 }
-
