@@ -66,9 +66,16 @@ function formatValidationMessage(errors?: Record<string, string[]>): string {
   return `${label}: ${firstMessage || 'قيمة غير صالحة.'}`;
 }
 
+// Enforce API URL — do not silently fall back
+const apiBase = process.env.NEXT_PUBLIC_API_URL;
+if (!apiBase) {
+  // Throw early so builds fail when env is missing — this prevents accidental silent fallbacks
+  throw new Error('NEXT_PUBLIC_API_URL environment variable is required and must point to your API (e.g. https://api.example.com/v1)');
+}
+
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || '/api/v1',
+  baseURL: apiBase,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
