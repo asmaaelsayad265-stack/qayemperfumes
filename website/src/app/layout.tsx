@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cairo } from "next/font/google";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://qayem-perfumes.example";
 
@@ -90,6 +91,7 @@ export default function RootLayout({
         />
         {children}
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
