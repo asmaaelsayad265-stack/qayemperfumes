@@ -150,7 +150,7 @@ function AdminAnalyticsContent() {
                       <div key={point.month} className="flex flex-1 flex-col items-center gap-2">
                         <span className="text-[10px] text-muted">{formatCurrency(Number(point.revenue))}</span>
                         <div
-                          className="w-full rounded-t-lg bg-gradient-to-t from-gold/45 to-gold/20 transition hover:from-gold/65"
+                          className="w-full rounded-t-lg bg-linear-to-t from-gold/45 to-gold/20 transition hover:from-gold/65"
                           style={{ height: `${height}%` }}
                         />
                         <span className="text-[10px] text-muted/70">{formatMonth(point.month)}</span>
@@ -213,7 +213,7 @@ function AdminAnalyticsContent() {
                           </div>
                         </div>
                         <div className="h-2 overflow-hidden rounded-full bg-bg1">
-                          <div className="h-full rounded-full bg-gradient-to-l from-gold to-gold/60" style={{ width: `${pct}%` }} />
+                          <div className="h-full rounded-full bg-linear-to-l from-gold to-gold/60" style={{ width: `${pct}%` }} />
                         </div>
                       </div>
                     );

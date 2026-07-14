@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import PublicShell from "../components/layout/PublicShell";
 import ScrollReveal from "../components/sections/ScrollReveal";
@@ -167,14 +166,7 @@ export default function OffersPage() {
             </div>
 
             <div className="relative overflow-hidden rounded-[2.25rem] border border-gold/15 bg-bg0/40 p-3 backdrop-blur-xl">
-              <Image
-                src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1200&q=80"
-                alt="Luxury perfume offer mood"
-                width={1200}
-                height={1400}
-                className="h-full w-full rounded-[1.75rem] object-cover"
-                priority
-              />
+              <div className="h-full w-full rounded-[1.75rem] bg-bg0/60" />
               <div className="absolute inset-0 rounded-[2.25rem] bg-[linear-gradient(180deg,transparent_36%,rgba(5,5,5,0.84))]" />
               <div className="absolute left-6 top-6 rounded-full border border-white/10 bg-black/35 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-gold/90 backdrop-blur-xl">
                 seasonal drop

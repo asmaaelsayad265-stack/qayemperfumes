@@ -19,35 +19,35 @@ export interface CategoryPayload {
 export const categoriesApi = {
   // Get all categories
   getAll: async (): Promise<Category[]> => {
-    const response = await apiClient.get<ApiResource<Category[]> | Category[]>('/categories');
+    const response = await apiClient.get<ApiResource<Category[]>>('/categories');
     return unwrapResource(response.data);
   },
 
   // Get active categories (for navigation)
   getActive: async (): Promise<Category[]> => {
-    const response = await apiClient.get<ApiResource<Category[]> | Category[]>('/categories/active');
+    const response = await apiClient.get<ApiResource<Category[]>>('/categories/active');
     return unwrapResource(response.data);
   },
 
   // Get category by slug
   getBySlug: async (slug: string): Promise<Category> => {
-    const response = await apiClient.get<ApiResource<Category> | Category>(`/categories/slug/${slug}`);
+    const response = await apiClient.get<ApiResource<Category>>(`/categories/slug/${slug}`);
     return unwrapResource(response.data);
   },
 
   // Get category by ID
   getById: async (id: number): Promise<Category> => {
-    const response = await apiClient.get<ApiResource<Category> | Category>(`/categories/${id}`);
+    const response = await apiClient.get<ApiResource<Category>>(`/categories/${id}`);
     return unwrapResource(response.data);
   },
 
   create: async (payload: CategoryPayload): Promise<Category> => {
-    const response = await apiClient.post<ApiResource<Category> | Category>('/categories', payload);
+    const response = await apiClient.post<ApiResource<Category>>('/categories', payload);
     return unwrapResource(response.data);
   },
 
   update: async (id: number, payload: CategoryPayload): Promise<Category> => {
-    const response = await apiClient.put<ApiResource<Category> | Category>(`/categories/${id}`, payload);
+    const response = await apiClient.put<ApiResource<Category>>(`/categories/${id}`, payload);
     return unwrapResource(response.data);
   },
 

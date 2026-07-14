@@ -265,3 +265,20 @@ html {
   animation: whatsappRing 2s ease-out infinite;
 }
 
+/* ================================================================
+   Overlay states (error / loading / not-found) — shared backdrop
+   Extracted from JSX arbitrary values so the markup stays lean and
+   the gradient definitions live in one place (Tailwind v4 friendly).
+   ================================================================ */
+.overlay-backdrop {
+  background: radial-gradient(circle at center, rgba(200, 162, 74, 0.18), rgba(5, 5, 5, 0.98) 60%);
+}
+
+.overlay-glow {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(200, 162, 74, 0.12), transparent 28%),
+    radial-gradient(circle at 80% 12%, rgba(200, 162, 74, 0.15), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent);
+}
+
+

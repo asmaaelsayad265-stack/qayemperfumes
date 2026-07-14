@@ -2,12 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 
-const heroImages = [
-  "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1200&q=80",
-];
 
 export default function HeroSection() {
+
+
   return (
     <section className="relative isolate min-h-[calc(100vh-7rem)] overflow-hidden rounded-[2.75rem] border border-gold/15 bg-[linear-gradient(180deg,rgba(17,17,17,0.96),rgba(5,5,5,1))] shadow-luxury">
       <div className="pointer-events-none absolute inset-0 luxury-grain" />
@@ -19,7 +17,7 @@ export default function HeroSection() {
       <div className="absolute left-5 top-1/2 hidden -translate-y-1/2 lg:block" aria-hidden="true">
         <div className="rounded-full border border-gold/15 bg-bg0/30 px-3 py-5 backdrop-blur-xl opacity-30">
           <div className="writing-vertical text-[10px] font-semibold tracking-[0.42em] text-gold/70">
-            ドラゴンダイブ
+            قَيَّم للعطور
           </div>
         </div>
       </div>
@@ -92,15 +90,7 @@ export default function HeroSection() {
 
           <div className="relative overflow-hidden rounded-[2.5rem] border border-gold/18 bg-[linear-gradient(180deg,rgba(17,17,17,0.72),rgba(5,5,5,0.96))] p-3 shadow-[0_30px_90px_rgba(0,0,0,0.45)]">
             <div className="grid gap-3 sm:grid-cols-[1.1fr_0.9fr]">
-              <div className="relative min-h-[24rem] overflow-hidden rounded-[2rem]">
-                <Image
-                  src={heroImages[0]}
-                  alt="Luxury perfume bottle"
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover transition duration-1000 group-hover:scale-105"
-                />
+              <div className="relative min-h-[24rem] overflow-hidden rounded-[2rem] border border-gold/10 bg-bg0/60">
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_30%,rgba(5,5,5,0.84))]" />
                 <div className="absolute left-4 top-4 rounded-full border border-white/10 bg-black/35 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-gold/90 backdrop-blur-xl">
                   signature scent
@@ -120,14 +110,7 @@ export default function HeroSection() {
               </div>
 
               <div className="grid gap-3">
-                <div className="relative min-h-[12rem] overflow-hidden rounded-[1.75rem] border border-white/8">
-                  <Image
-                    src={heroImages[1]}
-                    alt="Perfume composition"
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 20vw"
-                    className="object-cover transition duration-1000 hover:scale-105"
-                  />
+                <div className="relative min-h-[12rem] overflow-hidden rounded-[1.75rem] border border-white/8 bg-bg0/60">
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(5,5,5,0.86))]" />
                 </div>
 

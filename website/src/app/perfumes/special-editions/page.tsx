@@ -43,7 +43,7 @@ function SpecialEditionsContent() {
         </div>
         <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {[...Array(12)].map((_, i) => (
-            <div key={i} className="h-64 animate-pulse rounded-lg bg-gradient-to-br from-gray-900 to-black" />
+            <div key={i} className="h-64 animate-pulse rounded-lg bg-linear-to-br from-gray-900 to-black" />
           ))}
         </div>
       </section>

@@ -92,7 +92,7 @@ export default function PerfumesMenPage() {
               {[...Array(12)].map((_, i) => (
                 <div
                   key={i}
-                  className="h-64 animate-pulse rounded-lg bg-gradient-to-br from-gray-900 to-black"
+                  className="h-64 animate-pulse rounded-lg bg-linear-to-br from-gray-900 to-black"
                   aria-hidden="true"
                 />
               ))}

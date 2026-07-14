@@ -6,7 +6,7 @@ export default function AboutPage() {
   return (
     <PublicShell>
       <div className="space-y-10">
-        <section className="relative overflow-hidden rounded-3xl border border-gold/15 bg-gradient-to-b from-gold/10 to-surface/50 p-6 sm:p-10">
+        <section className="relative overflow-hidden rounded-3xl border border-gold/15 bg-linear-to-b from-gold/10 to-surface/50 p-6 sm:p-10">
           <div className="pointer-events-none absolute inset-0 opacity-70">
             <div className="absolute -right-28 -top-28 h-72 w-72 rounded-full bg-gold/15 blur-3xl" />
             <div className="absolute -left-28 -bottom-28 h-72 w-72 rounded-full bg-bronze/10 blur-3xl" />

@@ -19,41 +19,31 @@ export interface ApiResource<T> {
   data: T;
 }
 
-export interface PaginatedResponse<T> {
-  data: T[];
-  current_page: number;
-  last_page: number;
-  per_page: number;
-  total: number;
-}
-
-// Overloads preserve the caller's expected shape:
-//   - single resource  -> returns the resource
-//   - paginated list    -> returns the array
-//   - bare/non-matching -> returns the original payload
+/**
+ * Unwrap a Laravel JSON:API envelope so callers always get the bare data.
+ *
+ * Overloads:
+ *   unwrapResource(ApiResource<T>) → T
+ *   unwrapResource(PaginatedResponse<T>) → T[]
+ *   unwrapResource(T) → T           (passthrough)
+ *
+ * Callers pass a concrete type via the axios generic and this function
+ * resolves the correct shape without needing distributive conditional types
+ * on a bare generic (which TypeScript cannot resolve at call sites).
+ */
 export function unwrapResource<T>(payload: ApiResource<T>): T;
 export function unwrapResource<T>(payload: PaginatedResponse<T>): T[];
 export function unwrapResource<T>(payload: T): T;
-export function unwrapResource<T>(payload: T | ApiResource<T> | PaginatedResponse<T>): T | T[] {
+export function unwrapResource(payload: unknown): unknown {
   if (
     payload &&
     typeof payload === 'object' &&
-    'data' in payload &&
-    Object.keys(payload as unknown as Record<string, unknown>).length === 1
+    'data' in payload
   ) {
-    return (payload as ApiResource<T>).data;
+    return (payload as Record<string, unknown>).data;
   }
 
-  if (
-    payload &&
-    typeof payload === 'object' &&
-    'data' in payload &&
-    ('current_page' in payload || 'last_page' in payload)
-  ) {
-    return (payload as PaginatedResponse<T>).data;
-  }
-
-  return payload as T;
+  return payload;
 }
 
 const fieldLabels: Record<string, string> = {
@@ -147,6 +137,14 @@ apiClient.interceptors.response.use(
         message = 'انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة أخرى.';
         if (typeof window !== 'undefined') {
           localStorage.removeItem('auth_token');
+          // Sanctum token TTL is enforced server-side; when it expires the API
+          // returns 401. Clear the stale token and route the user to login when a
+          // login route is configured (NEXT_PUBLIC_LOGIN_URL). The pathname guard
+          // prevents redirect loops when already on the login page.
+          const loginPath = process.env.NEXT_PUBLIC_LOGIN_URL;
+          if (loginPath && window.location.pathname !== loginPath) {
+            window.location.href = loginPath;
+          }
         }
         break;
       case 403:

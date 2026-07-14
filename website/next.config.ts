@@ -16,7 +16,7 @@ const apiOrigin = (() => {
 
 const scriptSrc = [
   "'self'",
-  (process.env.NODE_ENV as string) === "development" ? "'unsafe-eval'" : "",
+  (process.env.NODE_ENV as string) === "development" ? "'unsafe-eval' 'unsafe-inline'" : "",
 ].filter(Boolean);
 
 const contentSecurityPolicy = [

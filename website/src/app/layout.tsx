@@ -13,6 +13,7 @@ const cairo = Cairo({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   applicationName: "QAYEM Perfumes",
+  category: "shopping",
   title: {
     default: "قَيَّم للعطور | QAYEM Perfumes",
     template: "%s | QAYEM Perfumes",
@@ -54,6 +55,10 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: "/favicon.ico",
+  },
+
 };
 
 export const viewport = {

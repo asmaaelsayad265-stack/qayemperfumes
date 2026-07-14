@@ -8,7 +8,7 @@ import OffersSection from "./components/sections/OffersSection";
 
 export const dynamic = 'force-dynamic';
 
-export default async function Home() {
+export default function Home() {
 
   return (
     <PublicShell>

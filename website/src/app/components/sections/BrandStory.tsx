@@ -3,7 +3,7 @@ import ScrollReveal from "./ScrollReveal";
 
 export default function BrandStory() {
   return (
-    <section className="relative overflow-hidden rounded-[2.5rem] border border-gold/15 bg-gradient-to-br from-bg1/80 via-bg1 to-bg0 p-8 sm:p-12 lg:p-16">
+    <section className="relative overflow-hidden rounded-[2.5rem] border border-gold/15 bg-linear-to-br from-bg1/80 via-bg1 to-bg0 p-8 sm:p-12 lg:p-16">
       <div className="pointer-events-none absolute inset-0">
         {/* Nubian/egyptian-inspired decorative bands */}
         <div className="absolute -right-32 -top-32 h-96 w-96 rotate-12 rounded-full bg-gold/10 blur-3xl mix-blend-screen" />
@@ -55,7 +55,7 @@ export default function BrandStory() {
         </div>
 
         <div className="relative">
-          <div className="absolute -inset-8 rounded-[3rem] bg-gradient-to-b from-gold/10 to-transparent blur-3xl opacity-50" />
+          <div className="absolute -inset-8 rounded-[3rem] bg-linear-to-b from-gold/10 to-transparent blur-3xl opacity-50" />
           <div className="relative grid gap-6">
             <ScrollReveal>
               <Card className="overflow-hidden rounded-[2rem] border-gold/20 bg-bg0/60 p-8 shadow-luxury backdrop-blur-md">
@@ -67,7 +67,7 @@ export default function BrandStory() {
                       <span className="text-xs text-muted">لمسة البداية</span>
                     </div>
                     <div className="h-1.5 rounded-full bg-gold/10">
-                      <div className="h-full w-[65%] rounded-full bg-gradient-to-r from-gold/40 to-gold" />
+                      <div className="h-full w-[65%] rounded-full bg-linear-to-r from-gold/40 to-gold" />
                     </div>
                   </div>
 
@@ -77,7 +77,7 @@ export default function BrandStory() {
                       <span className="text-xs text-muted">الجوهر</span>
                     </div>
                     <div className="h-1.5 rounded-full bg-gold/10">
-                      <div className="h-full w-[85%] rounded-full bg-gradient-to-r from-gold/40 to-gold" />
+                      <div className="h-full w-[85%] rounded-full bg-linear-to-r from-gold/40 to-gold" />
                     </div>
                   </div>
 
@@ -87,7 +87,7 @@ export default function BrandStory() {
                       <span className="text-xs text-muted">الأثر والهيبة</span>
                     </div>
                     <div className="h-1.5 rounded-full bg-gold/10">
-                      <div className="h-full w-[95%] rounded-full bg-gradient-to-r from-gold/40 to-gold" />
+                      <div className="h-full w-[95%] rounded-full bg-linear-to-r from-gold/40 to-gold" />
                     </div>
                   </div>
                 </div>

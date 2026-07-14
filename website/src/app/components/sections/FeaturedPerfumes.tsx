@@ -114,7 +114,7 @@ export default function FeaturedPerfumes({ initialProducts }: { initialProducts?
           className="group relative inline-flex items-center justify-center overflow-hidden rounded-2xl border border-gold/30 bg-bg0/40 px-8 py-4 text-sm font-bold text-text backdrop-blur-sm transition-all hover:border-gold hover:text-gold"
         >
           <span className="relative z-10">استكشف جميع العطور</span>
-          <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-gold/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
+          <div className="absolute inset-0 h-full w-full bg-linear-to-r from-transparent via-gold/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
         </Link>
       </div>
     </section>
