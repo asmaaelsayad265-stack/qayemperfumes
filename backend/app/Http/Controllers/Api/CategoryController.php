@@ -31,6 +31,7 @@ class CategoryController extends Controller
   public function show(int $id)
   {
     $category = $this->categoryService->find($id);
+    abort_if(!$category, 404);
     return new CategoryResource($category);
   }
 
@@ -54,6 +55,7 @@ class CategoryController extends Controller
   public function bySlug(string $slug)
   {
     $category = $this->categoryService->getBySlug($slug);
+    abort_if(!$category, 404);
     return new CategoryResource($category);
   }
 }

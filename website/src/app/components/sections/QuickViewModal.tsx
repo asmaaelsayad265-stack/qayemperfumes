@@ -5,42 +5,79 @@ import LightboxGallery from "./LightboxGallery";
 import PerfumeNotes from "./PerfumeNotes";
 import ProductNotesVisualizer from "./ProductNotesVisualizer";
 import LuxuryBadge from "../ui/LuxuryBadge";
+import { Product, productsApi } from "@/services/products";
 
-
-type MockProduct = {
-  title: string;
-  price: string;
-  badges: { label: string; variant: "best" | "limited" | "new" | "summer" }[];
-  sizes: string[];
-  images: string[];
-};
-
-const mockProduct: MockProduct = {
-  title: "اسم العطر الفاخر",
-  price: "2800 EGP",
-  badges: [
-    { label: "Best Seller", variant: "best" },
-    { label: "Limited Edition", variant: "limited" },
-  ],
-  sizes: ["50ml", "75ml", "100ml"],
-  images: ["/file.svg", "/globe.svg", "/window.svg", "/next.svg"],
-};
+interface QuickViewModalProps {
+  open: boolean;
+  onClose: () => void;
+  /** Full product object (preferred). */
+  product?: Product | null;
+  /** Product id; the modal fetches the product when `product` is not supplied. */
+  productId?: number;
+}
 
 export default function QuickViewModal({
   open,
   onClose,
-}: {
-  open: boolean;
-  onClose: () => void;
-}) {
-  const [activeSize, setActiveSize] = useState(mockProduct.sizes[0]);
+  product: productProp,
+  productId,
+}: QuickViewModalProps) {
+  const [activeSize, setActiveSize] = useState("100ml");
+
+  // Resolve the product: prefer the passed object, otherwise fetch by id.
+  const [product, setProduct] = useState<Product | null>(productProp ?? null);
+  const [loadingProduct, setLoadingProduct] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+
+    if (productProp) {
+      setProduct(productProp);
+      return;
+    }
+
+    if (productId == null) {
+      setProduct(null);
+      return;
+    }
+
+    let cancelled = false;
+    setLoadingProduct(true);
+    productsApi
+      .getById(productId)
+      .then((fetched) => {
+        if (!cancelled) setProduct(fetched);
+      })
+      .catch(() => {
+        if (!cancelled) setProduct(null);
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingProduct(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [open, productProp, productId]);
 
   const handleClose = useCallback(() => {
-    setActiveSize(mockProduct.sizes[0]);
+    setActiveSize("100ml");
     onClose();
   }, [onClose]);
 
-  const badges = useMemo(() => mockProduct.badges, []);
+  const badges = useMemo(() => {
+    if (!product) return [];
+    const list = [] as { label: string; variant: "best" | "limited" | "new" | "summer" }[];
+    if (product.is_best_seller) list.push({ label: "Best Seller", variant: "best" });
+    if (product.is_limited_edition) list.push({ label: "Limited Edition", variant: "limited" });
+    if (list.length === 0) list.push({ label: "New Collection", variant: "new" });
+    return list;
+  }, [product]);
+
+  const images = useMemo(() => {
+    if (!product?.image) return [];
+    return [product.image];
+  }, [product]);
 
   useEffect(() => {
     if (!open) return;
@@ -53,9 +90,24 @@ export default function QuickViewModal({
 
   if (!open) return null;
 
+  if (!product) {
+    if (loadingProduct) {
+      return (
+        <div
+          className="fixed inset-0 z-modal flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="h-10 w-10 animate-spin rounded-full border-2 border-gold/30 border-t-gold" />
+        </div>
+      );
+    }
+    return null;
+  }
+
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-modal flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       onMouseDown={(e) => {
@@ -66,7 +118,7 @@ export default function QuickViewModal({
         <div className="flex items-center justify-between gap-3 border-b border-gold/10 bg-bg1/40 px-4 py-3">
           <div className="min-w-0">
             <div className="text-xs font-semibold text-muted">Quick View</div>
-            <div className="truncate text-sm font-extrabold">{mockProduct.title}</div>
+            <div className="truncate text-sm font-extrabold">{product.name_ar || "Product"}</div>
           </div>
           <button
             type="button"
@@ -79,10 +131,15 @@ export default function QuickViewModal({
 
         <div className="grid gap-6 p-4 sm:p-6 md:grid-cols-5">
           <div className="md:col-span-2">
-            {/* Gallery lightbox is inside; here we keep the premium preview */}
-            <div className="rounded-3xl border border-gold/15 bg-bg0/30 p-2">
-              <LightboxGallery images={mockProduct.images} />
-            </div>
+            {images.length > 0 ? (
+              <div className="rounded-3xl border border-gold/15 bg-bg0/30 p-2">
+                <LightboxGallery images={images} />
+              </div>
+            ) : (
+              <div className="flex h-64 items-center justify-center rounded-3xl border border-gold/15 bg-bg0/30 text-xs text-muted">
+                No image available
+              </div>
+            )}
           </div>
 
           <div className="md:col-span-3 space-y-5">
@@ -96,11 +153,13 @@ export default function QuickViewModal({
               <div className="mt-3 flex items-center justify-between gap-4">
                 <div>
                   <div className="text-xs font-semibold text-muted">السعر</div>
-                  <div className="mt-1 text-2xl font-extrabold text-gold">{mockProduct.price}</div>
+                  <div className="mt-1 text-2xl font-extrabold text-gold">
+                    {String(product.price || 0)} <span className="text-sm font-semibold">EGP</span>
+                  </div>
                 </div>
                 <div className="rounded-2xl border border-gold/15 bg-bg1/30 px-4 py-3">
                   <div className="text-xs font-semibold text-muted">الحالة</div>
-                  <div className="mt-1 text-xs font-extrabold text-text">متوفر — Mock</div>
+                  <div className="mt-1 text-xs font-extrabold text-text">متوفر</div>
                 </div>
               </div>
             </div>
@@ -108,7 +167,7 @@ export default function QuickViewModal({
             <div>
               <div className="text-xs font-semibold text-muted">اختر الحجم</div>
               <div className="mt-2 grid grid-cols-3 gap-2">
-                {mockProduct.sizes.map((s) => (
+                {["50ml", "75ml", "100ml"].map((s) => (
                   <button
                     key={s}
                     type="button"
@@ -134,7 +193,7 @@ export default function QuickViewModal({
                 type="button"
                 className="gold-shimmer inline-flex items-center justify-center rounded-2xl bg-transparent px-4 py-3 text-sm font-semibold text-transparent ring-1 ring-gold/40 transition hover:opacity-95"
               >
-                إضافة للسلة (Mock)
+                إضافة للسلة
               </button>
               <button
                 type="button"

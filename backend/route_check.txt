@@ -1,0 +1,75 @@
+
+  POST      _ignition/execute-solution ignition.executeSolution › Spatie\LaravelIgnition › ExecuteSolutionContr…
+  GET|HEAD  _ignition/health-check ....... ignition.healthCheck › Spatie\LaravelIgnition › HealthCheckController
+  POST      _ignition/update-config .... ignition.updateConfig › Spatie\LaravelIgnition › UpdateConfigController
+  POST      api/auth/login ............................................................ Api\AuthController@login
+  POST      api/auth/logout .......................................................... Api\AuthController@logout
+  POST      api/auth/refresh ........................................................ Api\AuthController@refresh
+  GET|HEAD  api/auth/user .............................................................. Api\AuthController@user
+  GET|HEAD  api/v1/analytics/dashboard ....................................... Api\AnalyticsController@dashboard
+  GET|HEAD  api/v1/analytics/sales ............................................... Api\AnalyticsController@sales
+  GET|HEAD  api/v1/analytics/top-products .................................. Api\AnalyticsController@topProducts
+  GET|HEAD  api/v1/categories ..................................................... Api\CategoryController@index
+  POST      api/v1/categories ..................................................... Api\CategoryController@store
+  GET|HEAD  api/v1/categories/active ............................................. Api\CategoryController@active
+  GET|HEAD  api/v1/categories/slug/{slug} ........................................ Api\CategoryController@bySlug
+  GET|HEAD  api/v1/categories/{id} ................................................. Api\CategoryController@show
+  PUT       api/v1/categories/{id} ............................................... Api\CategoryController@update
+  DELETE    api/v1/categories/{id} .............................................. Api\CategoryController@destroy
+  GET|HEAD  api/v1/customers ...................................................... Api\CustomerController@index
+  POST      api/v1/customers ...................................................... Api\CustomerController@store
+  GET|HEAD  api/v1/customers/email/{email} ...................................... Api\CustomerController@byEmail
+  GET|HEAD  api/v1/customers/vip .................................................... Api\CustomerController@vip
+  GET|HEAD  api/v1/customers/{id} .................................................. Api\CustomerController@show
+  PUT       api/v1/customers/{id} ................................................ Api\CustomerController@update
+  DELETE    api/v1/customers/{id} ............................................... Api\CustomerController@destroy
+  GET|HEAD  api/v1/inventory ..................................................... Api\InventoryController@index
+  POST      api/v1/inventory ..................................................... Api\InventoryController@store
+  GET|HEAD  api/v1/inventory/low-stock ........................................ Api\InventoryController@lowStock
+  GET|HEAD  api/v1/inventory/out-of-stock ................................... Api\InventoryController@outOfStock
+  GET|HEAD  api/v1/inventory/sku/{sku} ........................................... Api\InventoryController@bySku
+  GET|HEAD  api/v1/inventory/{id} ................................................. Api\InventoryController@show
+  PUT       api/v1/inventory/{id} ............................................... Api\InventoryController@update
+  DELETE    api/v1/inventory/{id} .............................................. Api\InventoryController@destroy
+  GET|HEAD  api/v1/offers ............................................................ Api\OfferController@index
+  GET|HEAD  api/v1/offers/active .................................................... Api\OfferController@active
+  GET|HEAD  api/v1/offers/{id} ........................................................ Api\OfferController@show
+  GET|HEAD  api/v1/orders ............................................................ Api\OrderController@index
+  POST      api/v1/orders ............................................................ Api\OrderController@store
+  GET|HEAD  api/v1/orders/customer/{customerId} ................................. Api\OrderController@byCustomer
+  GET|HEAD  api/v1/orders/recent .................................................... Api\OrderController@recent
+  GET|HEAD  api/v1/orders/status/{status} ......................................... Api\OrderController@byStatus
+  GET|HEAD  api/v1/orders/{id} ........................................................ Api\OrderController@show
+  PUT       api/v1/orders/{id} ...................................................... Api\OrderController@update
+  DELETE    api/v1/orders/{id} ..................................................... Api\OrderController@destroy
+  GET|HEAD  api/v1/products ........................................................ Api\ProductController@index
+  POST      api/v1/products ........................................................ Api\ProductController@store
+  GET|HEAD  api/v1/products/best-sellers ..................................... Api\ProductController@bestSellers
+  GET|HEAD  api/v1/products/category/{categoryId} ............................. Api\ProductController@byCategory
+  GET|HEAD  api/v1/products/featured ............................................ Api\ProductController@featured
+  GET|HEAD  api/v1/products/search ................................................ Api\ProductController@search
+  GET|HEAD  api/v1/products/slug/{slug} ........................................... Api\ProductController@bySlug
+  GET|HEAD  api/v1/products/{id} .................................................... Api\ProductController@show
+  PUT       api/v1/products/{id} .................................................. Api\ProductController@update
+  DELETE    api/v1/products/{id} ................................................. Api\ProductController@destroy
+  POST      api/v1/reviews .......................................................... Api\ReviewController@store
+  GET|HEAD  api/v1/reviews/approved .............................................. Api\ReviewController@approved
+  GET|HEAD  api/v1/reviews/pending ................................................ Api\ReviewController@pending
+  GET|HEAD  api/v1/reviews/product/{productId} .................................. Api\ReviewController@byProduct
+  GET|HEAD  api/v1/reviews/{id} ...................................................... Api\ReviewController@show
+  PUT       api/v1/reviews/{id} .................................................... Api\ReviewController@update
+  DELETE    api/v1/reviews/{id} ................................................... Api\ReviewController@destroy
+  GET|HEAD  api/v1/settings ........................................................ Api\SettingController@index
+  POST      api/v1/settings ........................................................ Api\SettingController@store
+  GET|HEAD  api/v1/settings/group/{group} ........................................ Api\SettingController@byGroup
+  GET|HEAD  api/v1/settings/key/{key} .............................................. Api\SettingController@byKey
+  GET|HEAD  api/v1/settings/{id} .................................................... Api\SettingController@show
+  PUT       api/v1/settings/{id} .................................................. Api\SettingController@update
+  DELETE    api/v1/settings/{id} ................................................. Api\SettingController@destroy
+  GET|HEAD  sanctum/csrf-cookie .............. sanctum.csrf-cookie › Laravel\Sanctum › CsrfCookieController@show
+  GET|HEAD  storage/{path} storage.local › vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemService…
+  PUT       storage/{path} storage.local.upload › vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem…
+  GET|HEAD  up ..... vendor/laravel/framework/src/Illuminate/Foundation/Configuration/ApplicationBuilder.php:219
+
+                                                                                             Showing [71] routes
+

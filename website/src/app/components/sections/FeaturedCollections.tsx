@@ -55,7 +55,7 @@ export default function FeaturedCollections() {
             key={c.title}
             className={
               "group relative overflow-hidden transition " +
-              (idx === 0 ? "bg-gradient-to-b from-gold/10 to-surface/70" : "")
+              (idx === 0 ? "bg-linear-to-b from-gold/10 to-surface/70" : "")
             }
           >
             <div className="absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">

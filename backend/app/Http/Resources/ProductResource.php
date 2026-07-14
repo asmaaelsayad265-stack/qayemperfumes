@@ -26,11 +26,11 @@ class ProductResource extends JsonResource
       'is_best_seller' => $this->is_best_seller,
       'is_limited_edition' => $this->is_limited_edition,
       'image' => $this->image,
-      'category' => CategoryResource::when($this->category, $this->category),
+      'category' => $this->when($this->category, fn () => CategoryResource::make($this->category)),
       'images' => ProductImageResource::collection($this->whenLoaded('images')),
       'notes' => ProductNoteResource::collection($this->whenLoaded('notes')),
       'reviews' => ReviewResource::collection($this->whenLoaded('reviews')),
-      'inventory' => InventoryResource::when($this->inventory, $this->inventory),
+      'inventory' => $this->when($this->inventory, fn () => InventoryResource::make($this->inventory)),
       'created_at' => $this->created_at,
       'updated_at' => $this->updated_at,
     ];

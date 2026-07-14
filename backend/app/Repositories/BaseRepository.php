@@ -24,6 +24,11 @@ abstract class BaseRepository
     return $this->model->find($id, $columns);
   }
 
+  public function count(): int
+  {
+    return $this->model->count();
+  }
+
   public function create(array $data): Model
   {
     return $this->model->create($data);

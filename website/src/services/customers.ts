@@ -15,22 +15,22 @@ export interface Customer {
 
 export const customersApi = {
   getAll: async (): Promise<Customer[]> => {
-    const response = await apiClient.get<ApiResource<Customer[]> | Customer[]>('/customers');
+    const response = await apiClient.get<ApiResource<Customer[]>>('/customers');
     return unwrapResource(response.data);
   },
 
   getVip: async (): Promise<Customer[]> => {
-    const response = await apiClient.get<ApiResource<Customer[]> | Customer[]>('/customers/vip');
+    const response = await apiClient.get<ApiResource<Customer[]>>('/customers/vip');
     return unwrapResource(response.data);
   },
 
   getById: async (id: number): Promise<Customer> => {
-    const response = await apiClient.get<ApiResource<Customer> | Customer>(`/customers/${id}`);
+    const response = await apiClient.get<ApiResource<Customer>>(`/customers/${id}`);
     return unwrapResource(response.data);
   },
 
   getByEmail: async (email: string): Promise<Customer> => {
-    const response = await apiClient.get<ApiResource<Customer> | Customer>(`/customers/email/${encodeURIComponent(email)}`);
+    const response = await apiClient.get<ApiResource<Customer>>(`/customers/email/${encodeURIComponent(email)}`);
     return unwrapResource(response.data);
   },
 };

@@ -31,6 +31,7 @@ class ReviewController extends Controller
   public function show(int $id)
   {
     $review = $this->reviewService->find($id);
+    abort_if(!$review, 404);
     return new ReviewResource($review);
   }
 

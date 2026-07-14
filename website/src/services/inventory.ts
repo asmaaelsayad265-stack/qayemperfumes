@@ -27,37 +27,37 @@ export interface InventoryPayload {
 
 export const inventoryApi = {
   getAll: async (): Promise<InventoryItem[]> => {
-    const response = await apiClient.get<ApiResource<InventoryItem[]> | InventoryItem[]>('/inventory');
+    const response = await apiClient.get<ApiResource<InventoryItem[]>>('/inventory');
     return unwrapResource(response.data);
   },
 
   getLowStock: async (): Promise<InventoryItem[]> => {
-    const response = await apiClient.get<ApiResource<InventoryItem[]> | InventoryItem[]>('/inventory/low-stock');
+    const response = await apiClient.get<ApiResource<InventoryItem[]>>('/inventory/low-stock');
     return unwrapResource(response.data);
   },
 
   getOutOfStock: async (): Promise<InventoryItem[]> => {
-    const response = await apiClient.get<ApiResource<InventoryItem[]> | InventoryItem[]>('/inventory/out-of-stock');
+    const response = await apiClient.get<ApiResource<InventoryItem[]>>('/inventory/out-of-stock');
     return unwrapResource(response.data);
   },
 
   getBySku: async (sku: string): Promise<InventoryItem> => {
-    const response = await apiClient.get<ApiResource<InventoryItem> | InventoryItem>(`/inventory/sku/${sku}`);
+    const response = await apiClient.get<ApiResource<InventoryItem>>(`/inventory/sku/${sku}`);
     return unwrapResource(response.data);
   },
 
   getById: async (id: number): Promise<InventoryItem> => {
-    const response = await apiClient.get<ApiResource<InventoryItem> | InventoryItem>(`/inventory/${id}`);
+    const response = await apiClient.get<ApiResource<InventoryItem>>(`/inventory/${id}`);
     return unwrapResource(response.data);
   },
 
   create: async (payload: InventoryPayload): Promise<InventoryItem> => {
-    const response = await apiClient.post<ApiResource<InventoryItem> | InventoryItem>('/inventory', payload);
+    const response = await apiClient.post<ApiResource<InventoryItem>>('/inventory', payload);
     return unwrapResource(response.data);
   },
 
   update: async (id: number, payload: InventoryPayload): Promise<InventoryItem> => {
-    const response = await apiClient.put<ApiResource<InventoryItem> | InventoryItem>(`/inventory/${id}`, payload);
+    const response = await apiClient.put<ApiResource<InventoryItem>>(`/inventory/${id}`, payload);
     return unwrapResource(response.data);
   },
 

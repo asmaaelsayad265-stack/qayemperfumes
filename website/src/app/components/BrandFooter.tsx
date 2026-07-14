@@ -17,8 +17,8 @@ export default function BrandFooter() {
   return (
     <footer className="relative mt-20 w-full overflow-hidden border-t border-gold/20 bg-[linear-gradient(180deg,rgba(11,11,11,0.84),rgba(5,5,5,1))] pt-16">
       {/* Decorative top glow */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
-      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-gold/5 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-gold/40 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-32 bg-linear-to-b from-gold/5 to-transparent" />
       <div className="pointer-events-none absolute inset-0 luxury-grain opacity-70" />
 
       <div className="mx-auto max-w-6xl px-4 pb-8 relative z-10">

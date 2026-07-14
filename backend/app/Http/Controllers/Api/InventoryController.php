@@ -31,6 +31,7 @@ class InventoryController extends Controller
   public function show(int $id)
   {
     $inventory = $this->inventoryService->find($id);
+    abort_if(!$inventory, 404);
     return new InventoryResource($inventory);
   }
 
@@ -59,6 +60,7 @@ class InventoryController extends Controller
   public function bySku(string $sku)
   {
     $inventory = $this->inventoryService->getBySku($sku);
+    abort_if(!$inventory, 404);
     return new InventoryResource($inventory);
   }
 }

@@ -75,7 +75,7 @@ export default function LightboxGallery({
 
       {open ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-xl"
+          className="fixed inset-0 z-modal flex items-center justify-center bg-black/75 p-4 backdrop-blur-xl"
           role="dialog"
           aria-modal="true"
           onMouseDown={(e) => {

@@ -1,0 +1,24 @@
+▲ Next.js 16.2.10 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.1.5:3001
+- Environments: .env.local
+✓ Ready in 2.4s
+⚠ Slow filesystem detected. The benchmark took 334ms. If d:\قيم للعطور\website\.next/dev is a network drive, consider moving it to a local folder.
+See more: https://nextjs.org/docs/app/guides/local-development
+
+ GET / 200 in 3.3s (next.js: 1011ms, application-code: 2.3s)
+ GET / 200 in 383ms (next.js: 87ms, application-code: 296ms)
+ GET / 200 in 358ms (next.js: 45ms, application-code: 313ms)
+ GET / 200 in 564ms (next.js: 54ms, application-code: 510ms)
+ GET / 200 in 1291ms (next.js: 57ms, application-code: 1235ms)
+ GET / 200 in 323ms (next.js: 11ms, application-code: 312ms)
+ GET / 200 in 451ms (next.js: 14ms, application-code: 437ms)
+⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+▲ Next.js 16.2.10 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.1.5:3001
+- Environments: .env.local
+✓ Ready in 3.8s
+⚠ Slow filesystem detected. The benchmark took 226ms. If d:\قيم للعطور\website\.next/dev is a network drive, consider moving it to a local folder.
+See more: https://nextjs.org/docs/app/guides/local-development
+

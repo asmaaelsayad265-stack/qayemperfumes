@@ -35,8 +35,7 @@ export default function SearchFilterBar({ onSearchResults }: SearchFilterBarProp
       try {
         const results = await retryWithBackoff(() => productsApi.search(debouncedQuery));
         if (onSearchResults) onSearchResults(results, debouncedQuery);
-      } catch (err) {
-        console.error("Search failed:", err);
+      } catch {
         if (onSearchResults) onSearchResults([], debouncedQuery);
       } finally {
         setSearching(false);

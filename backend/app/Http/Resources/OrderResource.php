@@ -21,7 +21,7 @@ class OrderResource extends JsonResource
       'customer_email' => $this->customer_email,
       'customer_phone' => $this->customer_phone,
       'notes' => $this->notes,
-      'customer' => CustomerResource::when($this->customer, $this->customer),
+      'customer' => $this->when($this->customer, fn () => CustomerResource::make($this->customer)),
       'items' => OrderItemResource::collection($this->whenLoaded('items')),
       'created_at' => $this->created_at,
       'updated_at' => $this->updated_at,

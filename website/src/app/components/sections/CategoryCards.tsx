@@ -6,12 +6,17 @@ import Card from "../ui/Card";
 import ScrollReveal from "./ScrollReveal";
 import { categoriesApi, Category } from "@/services/categories";
 
-export default function CategoryCards() {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function CategoryCards({ initialCategories }: { initialCategories?: Category[] }) {
+  const [categories, setCategories] = useState<Category[]>(initialCategories || []);
+  const [loading, setLoading] = useState(!initialCategories);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // If initial data was provided server-side, skip client fetch
+    if (initialCategories && initialCategories.length > 0) {
+      return;
+    }
+
     const fetchCategories = async () => {
       try {
         setLoading(true);
@@ -27,7 +32,7 @@ export default function CategoryCards() {
     };
 
     fetchCategories();
-  }, []);
+  }, [initialCategories]);
 
   // Show loading state
   if (loading) {
@@ -116,8 +121,8 @@ export default function CategoryCards() {
                 className={
                   "relative overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-luxury rounded-[2rem] p-6 " +
                   (idx % 2 === 0
-                    ? "bg-gradient-to-br from-gold/5 to-bg1/80 border border-gold/20 hover:border-gold/40"
-                    : "bg-gradient-to-tr from-bg0 to-bg1/90 border border-gold/10 hover:border-gold/30")
+                    ? "bg-linear-to-br from-gold/5 to-bg1/80 border border-gold/20 hover:border-gold/40"
+                    : "bg-linear-to-tr from-bg0 to-bg1/90 border border-gold/10 hover:border-gold/30")
                 }
               >
                 <div className="absolute -left-10 -top-10 h-32 w-32 rounded-full bg-gold/10 blur-3xl opacity-0 transition-opacity duration-700 group-hover:opacity-100" />

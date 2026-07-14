@@ -19,17 +19,31 @@ export interface ApiResource<T> {
   data: T;
 }
 
-export function unwrapResource<T>(payload: T | ApiResource<T>): T {
+/**
+ * Unwrap a Laravel JSON:API envelope so callers always get the bare data.
+ *
+ * Overloads:
+ *   unwrapResource(ApiResource<T>) → T
+ *   unwrapResource(PaginatedResponse<T>) → T[]
+ *   unwrapResource(T) → T           (passthrough)
+ *
+ * Callers pass a concrete type via the axios generic and this function
+ * resolves the correct shape without needing distributive conditional types
+ * on a bare generic (which TypeScript cannot resolve at call sites).
+ */
+export function unwrapResource<T>(payload: ApiResource<T>): T;
+export function unwrapResource<T>(payload: PaginatedResponse<T>): T[];
+export function unwrapResource<T>(payload: T): T;
+export function unwrapResource(payload: unknown): unknown {
   if (
     payload &&
     typeof payload === 'object' &&
-    'data' in payload &&
-    Object.keys(payload as unknown as Record<string, unknown>).length === 1
+    'data' in payload
   ) {
-    return (payload as ApiResource<T>).data;
+    return (payload as Record<string, unknown>).data;
   }
 
-  return payload as T;
+  return payload;
 }
 
 const fieldLabels: Record<string, string> = {
@@ -86,17 +100,28 @@ const apiClient: AxiosInstance = axios.create({
 // Request interceptor
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // Add auth token if available
-    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
+    // Add auth token if available (guard against localStorage SecurityError)
+    let token: string | null = null;
+
+    if (typeof window !== 'undefined') {
+      try {
+        token = localStorage.getItem('auth_token');
+      } catch {
+        token = null;
+      }
+    }
+
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
   (error: AxiosError) => {
     return Promise.reject(error);
   }
 );
+
 
 // Response interceptor
 apiClient.interceptors.response.use(
@@ -119,6 +144,14 @@ apiClient.interceptors.response.use(
         message = 'انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة أخرى.';
         if (typeof window !== 'undefined') {
           localStorage.removeItem('auth_token');
+          // Sanctum token TTL is enforced server-side; when it expires the API
+          // returns 401. Clear the stale token and route the user to login when a
+          // login route is configured (NEXT_PUBLIC_LOGIN_URL). The pathname guard
+          // prevents redirect loops when already on the login page.
+          const loginPath = process.env.NEXT_PUBLIC_LOGIN_URL;
+          if (loginPath && window.location.pathname !== loginPath) {
+            window.location.href = loginPath;
+          }
         }
         break;
       case 403:

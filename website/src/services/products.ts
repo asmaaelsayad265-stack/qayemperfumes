@@ -113,55 +113,55 @@ export interface ProductPayload {
 export const productsApi = {
   // Get all products
   getAll: async (): Promise<Product[]> => {
-    const response = await apiClient.get<ApiResource<Product[]> | Product[]>('/products');
+    const response = await apiClient.get<ApiResource<Product[]>>('/products');
     return unwrapResource(response.data);
   },
 
   // Get featured products
   getFeatured: async (): Promise<Product[]> => {
-    const response = await apiClient.get<ApiResource<Product[]> | Product[]>('/products/featured');
+    const response = await apiClient.get<ApiResource<Product[]>>('/products/featured');
     return unwrapResource(response.data);
   },
 
   // Get best sellers
   getBestSellers: async (): Promise<Product[]> => {
-    const response = await apiClient.get<ApiResource<Product[]> | Product[]>('/products/best-sellers');
+    const response = await apiClient.get<ApiResource<Product[]>>('/products/best-sellers');
     return unwrapResource(response.data);
   },
 
   // Get products by category
   getByCategory: async (categoryId: number): Promise<Product[]> => {
-    const response = await apiClient.get<ApiResource<Product[]> | Product[]>(`/products/category/${categoryId}`);
+    const response = await apiClient.get<ApiResource<Product[]>>(`/products/category/${categoryId}`);
     return unwrapResource(response.data);
   },
 
   // Get product by slug
   getBySlug: async (slug: string): Promise<Product> => {
-    const response = await apiClient.get<ApiResource<Product> | Product>(`/products/slug/${slug}`);
+    const response = await apiClient.get<ApiResource<Product>>(`/products/slug/${slug}`);
     return unwrapResource(response.data);
   },
 
   // Get product by ID
   getById: async (id: number): Promise<Product> => {
-    const response = await apiClient.get<ApiResource<Product> | Product>(`/products/${id}`);
+    const response = await apiClient.get<ApiResource<Product>>(`/products/${id}`);
     return unwrapResource(response.data);
   },
 
   // Search products
   search: async (query: string): Promise<Product[]> => {
-    const response = await apiClient.get<ApiResource<Product[]> | Product[]>('/products/search', {
+    const response = await apiClient.get<ApiResource<Product[]>>('/products/search', {
       params: { q: query },
     });
     return unwrapResource(response.data);
   },
 
   create: async (payload: ProductPayload): Promise<Product> => {
-    const response = await apiClient.post<ApiResource<Product> | Product>('/products', payload);
+    const response = await apiClient.post<ApiResource<Product>>('/products', payload);
     return unwrapResource(response.data);
   },
 
   update: async (id: number, payload: ProductPayload): Promise<Product> => {
-    const response = await apiClient.put<ApiResource<Product> | Product>(`/products/${id}`, payload);
+    const response = await apiClient.put<ApiResource<Product>>(`/products/${id}`, payload);
     return unwrapResource(response.data);
   },
 

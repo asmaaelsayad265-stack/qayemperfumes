@@ -1,0 +1,97 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Offer;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class OfferController extends Controller
+{
+    public function index(): JsonResponse
+    {
+        $offers = Offer::with('product:id,name_ar,name_en,slug,image,price,original_price')
+            ->get();
+
+        return response()->json(['data' => $offers]);
+    }
+
+    public function active(): JsonResponse
+    {
+        $offers = Offer::with('product:id,name_ar,name_en,slug,image,price,original_price')
+            ->where('is_active', true)
+            ->where('starts_at', '<=', now())
+            ->where(function ($query) {
+                $query->whereNull('expires_at')
+                    ->orWhere('expires_at', '>=', now());
+            })
+            ->get();
+
+        return response()->json(['data' => $offers]);
+    }
+
+    public function store(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'product_id' => ['required', 'exists:products,id'],
+            'discount_type' => ['required', 'in:percentage,fixed'],
+            'discount_value' => ['required', 'integer', 'min:1'],
+            'starts_at' => ['nullable', 'date'],
+            'expires_at' => ['nullable', 'date', 'after:starts_at'],
+            'is_active' => ['boolean'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'تعذر حفظ البيانات. يرجى مراجعة الحقول والمحاولة مرة أخرى.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $offer = Offer::create($validator->validated());
+
+        return response()->json(['data' => $offer], 201);
+    }
+
+    public function show(string $id): JsonResponse
+    {
+        $offer = Offer::with('product')->findOrFail($id);
+
+        return response()->json(['data' => $offer]);
+    }
+
+    public function update(Request $request, string $id): JsonResponse
+    {
+        $offer = Offer::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'product_id' => ['sometimes', 'exists:products,id'],
+            'discount_type' => ['sometimes', 'in:percentage,fixed'],
+            'discount_value' => ['sometimes', 'integer', 'min:1'],
+            'starts_at' => ['nullable', 'date'],
+            'expires_at' => ['nullable', 'date', 'after:starts_at'],
+            'is_active' => ['boolean'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'تعذر حفظ البيانات. يرجى مراجعة الحقول والمحاولة مرة أخرى.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $offer->update($validator->validated());
+
+        return response()->json(['data' => $offer]);
+    }
+
+    public function destroy(string $id): JsonResponse
+    {
+        $offer = Offer::findOrFail($id);
+        $offer->delete();
+
+        return response()->json(null, 204);
+    }
+}

@@ -9,7 +9,7 @@ class CategoryRequest extends FormRequest
 {
   public function authorize(): bool
   {
-    return true;
+    return $this->user()?->tokenCan('categories:manage') ?? false;
   }
 
   public function rules(): array
@@ -28,7 +28,7 @@ class CategoryRequest extends FormRequest
         'max:255',
         'regex:/^(\/[A-Za-z0-9._~\/-]+\.(jpg|jpeg|png|webp|avif)|https:\/\/[^\s]+\.(jpg|jpeg|png|webp|avif))$/i',
       ],
-      'sort_order' => 'integer|min:0',
+      'sort_order' => 'nullable|integer|min:0',
       'is_active' => 'boolean',
     ];
   }

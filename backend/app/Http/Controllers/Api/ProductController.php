@@ -31,6 +31,7 @@ class ProductController extends Controller
   public function show(int $id)
   {
     $product = $this->productService->find($id);
+    abort_if(!$product, 404);
     return new ProductResource($product);
   }
 
@@ -64,6 +65,7 @@ class ProductController extends Controller
   public function bySlug(string $slug)
   {
     $product = $this->productService->getBySlug($slug);
+    abort_if(!$product, 404);
     return new ProductResource($product);
   }
 

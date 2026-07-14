@@ -9,7 +9,7 @@ export default function PublicShell({
 }) {
   return (
     <div className="relative min-h-screen overflow-hidden bg-bg0 text-text luxury-grain">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[36rem] bg-[radial-gradient(circle_at_top,rgba(200,162,74,0.14),transparent_55%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[28rem] sm:h-hero-glow bg-[radial-gradient(circle_at_top,rgba(200,162,74,0.14),transparent_55%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.025),transparent_20%,transparent_80%,rgba(0,0,0,0.18))]" />
       <a href="#main-content" className="skip-link">
         تخطي إلى المحتوى

@@ -72,7 +72,7 @@ function ProductDetailsContent({ slug }: { slug: string }) {
   return (
     <PublicShell>
       <div className="space-y-8">
-        <section className="overflow-hidden rounded-[2.75rem] border border-gold/15 bg-[linear-gradient(180deg,rgba(17,17,17,0.92),rgba(5,5,5,1))] shadow-luxury">
+        <section className="relative overflow-hidden rounded-[2.75rem] border border-gold/15 bg-[linear-gradient(180deg,rgba(17,17,17,0.92),rgba(5,5,5,1))] shadow-luxury">
           <div className="pointer-events-none absolute inset-0 luxury-grain" />
           <div className="absolute inset-x-0 top-0 h-40 bg-[radial-gradient(circle_at_50%_0%,rgba(200,162,74,0.18),transparent_60%)]" />
           <ScrollReveal>

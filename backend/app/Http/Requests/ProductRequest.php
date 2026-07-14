@@ -9,7 +9,7 @@ class ProductRequest extends FormRequest
 {
   public function authorize(): bool
   {
-    return true;
+    return $this->user()?->tokenCan('products:manage') ?? false;
   }
 
   public function rules(): array
@@ -35,7 +35,7 @@ class ProductRequest extends FormRequest
         'nullable',
         'string',
         'max:255',
-        'regex:/^(\/[A-Za-z0-9._~\/-]+\.(jpg|jpeg|png|webp|avif)|https:\/\/[^\s]+\.(jpg|jpeg|png|webp|avif))$/i',
+        'regex:/^(\/[A-Za-z0-9._~\/-]+\.(jpg|jpeg|png|webp|avif)(?:\?[^\s]*)?|https:\/\/[^\s]+\.(jpg|jpeg|png|webp|avif)(?:\?[^\s]*)?)$/i',
       ],
     ];
   }

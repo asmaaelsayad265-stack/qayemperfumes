@@ -22,7 +22,7 @@ const quotes = [
 export default function LuxuryTestimonials() {
   return (
     <section className="space-y-12 py-12 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bg1/40 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-bg1/40 to-transparent pointer-events-none" />
       
       <div className="relative z-10 flex flex-col items-center text-center space-y-4">
         <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-bg1/40 px-4 py-2 text-xs font-semibold tracking-widest text-gold uppercase">

@@ -31,6 +31,7 @@ class SettingController extends Controller
   public function show(int $id)
   {
     $setting = $this->settingService->find($id);
+    abort_if(!$setting, 404);
     return new SettingResource($setting);
   }
 
@@ -49,6 +50,7 @@ class SettingController extends Controller
   public function byKey(string $key)
   {
     $value = $this->settingService->getByKey($key);
+    abort_if(is_null($value), 404);
     return response()->json(['value' => $value]);
   }
 

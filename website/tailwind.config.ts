@@ -19,6 +19,17 @@ export default {
       boxShadow: {
         luxury: "0 0 0 1px rgba(200,162,74,0.18), 0 10px 30px rgba(0,0,0,0.45)",
       },
+      zIndex: {
+        base: "0",
+        content: "10",
+        elevated: "20",
+        overlay: "100",
+        modal: "200",
+        toast: "300",
+      },
+      spacing: {
+        "hero-glow": "36rem",
+      },
     },
   },
   plugins: [],
