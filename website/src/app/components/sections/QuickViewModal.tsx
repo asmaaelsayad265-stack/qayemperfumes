@@ -5,20 +5,60 @@ import LightboxGallery from "./LightboxGallery";
 import PerfumeNotes from "./PerfumeNotes";
 import ProductNotesVisualizer from "./ProductNotesVisualizer";
 import LuxuryBadge from "../ui/LuxuryBadge";
-import { Product } from "@/services/products";
+import { Product, productsApi } from "@/services/products";
 
 interface QuickViewModalProps {
   open: boolean;
   onClose: () => void;
+  /** Full product object (preferred). */
   product?: Product | null;
+  /** Product id; the modal fetches the product when `product` is not supplied. */
+  productId?: number;
 }
 
 export default function QuickViewModal({
   open,
   onClose,
-  product,
+  product: productProp,
+  productId,
 }: QuickViewModalProps) {
   const [activeSize, setActiveSize] = useState("100ml");
+
+  // Resolve the product: prefer the passed object, otherwise fetch by id.
+  const [product, setProduct] = useState<Product | null>(productProp ?? null);
+  const [loadingProduct, setLoadingProduct] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+
+    if (productProp) {
+      setProduct(productProp);
+      return;
+    }
+
+    if (productId == null) {
+      setProduct(null);
+      return;
+    }
+
+    let cancelled = false;
+    setLoadingProduct(true);
+    productsApi
+      .getById(productId)
+      .then((fetched) => {
+        if (!cancelled) setProduct(fetched);
+      })
+      .catch(() => {
+        if (!cancelled) setProduct(null);
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingProduct(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [open, productProp, productId]);
 
   const handleClose = useCallback(() => {
     setActiveSize("100ml");
@@ -48,7 +88,22 @@ export default function QuickViewModal({
     return () => window.removeEventListener("keydown", onKey);
   }, [open, handleClose]);
 
-  if (!open || !product) return null;
+  if (!open) return null;
+
+  if (!product) {
+    if (loadingProduct) {
+      return (
+        <div
+          className="fixed inset-0 z-modal flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="h-10 w-10 animate-spin rounded-full border-2 border-gold/30 border-t-gold" />
+        </div>
+      );
+    }
+    return null;
+  }
 
   return (
     <div
