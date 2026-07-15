@@ -60,6 +60,20 @@ COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 # Copy supervisor configuration
 COPY docker/supervisord.conf /etc/supervisord.conf
 
+# Ensure php-fpm listens on TCP 127.0.0.1:9000 so nginx fastcgi_pass matches.
+# The default pool may use a Unix socket depending on the image; force TCP to
+# guarantee nginx <-> php-fpm connectivity. `|| true` keeps the build safe if
+# the default pool path differs between image versions.
+RUN sed -i 's#^listen = .*#listen = 127.0.0.1:9000#' /usr/local/etc/php-fpm.d/www.conf 2>/dev/null || true
+
+# Create supervisor log directory (required by supervisord.conf childlogdir and
+# logfile). Without this, supervisord aborts at startup with
+# "/var/log/supervisor is not an existing directory" and nginx/php-fpm never
+# start, failing the /up healthcheck.
+RUN mkdir -p /var/log/supervisor \
+    && chown root:root /var/log/supervisor \
+    && chmod 755 /var/log/supervisor
+
 # Expose port
 EXPOSE 80
 
