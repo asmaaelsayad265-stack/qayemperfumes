@@ -41,9 +41,12 @@ COPY . .
 RUN composer dump-autoload --optimize
 
 # Generate laravel optimization
+# NOTE: This is an API-only project with no Blade views (resources/views does
+# not exist), so `php artisan view:cache` is intentionally skipped to avoid the
+# "View path not found." build error. config:cache and route:cache are still
+# applied for production performance.
 RUN php artisan config:cache \
-    && php artisan route:cache \
-    && php artisan view:cache
+    && php artisan route:cache
 
 # Create storage directories and set permissions
 RUN mkdir -p storage/framework/{cache,sessions,views} \
