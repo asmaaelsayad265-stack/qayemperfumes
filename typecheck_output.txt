@@ -1,0 +1,5 @@
+npm error code EJSONPARSE
+npm error JSON.parse Invalid package.json: JSONParseError: Unexpected non-whitespace character after JSON at position 792 (line 33 column 2) while parsing near "...escript\": \"^5\"\n  }\n}\\n"
+npm error JSON.parse Failed to parse JSON data.
+npm error JSON.parse Note: package.json must be actual JSON, not just JavaScript.
+npm error A complete log of this run can be found in: C:\Users\asmaa\AppData\Local\npm-cache\_logs\2026-07-15T12_57_19_675Z-debug-0.log

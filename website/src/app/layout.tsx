@@ -3,7 +3,7 @@ import { Cairo } from "next/font/google";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://qayem-perfumes.example";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://qayemperfumes.vercel.app";
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],

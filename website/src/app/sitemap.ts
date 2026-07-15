@@ -10,7 +10,7 @@ interface CategorySitemapItem {
   updated_at?: string;
 }
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://qayem-perfumes.example";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://qayemperfumes.vercel.app";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 function normalizeResource<T>(payload: T[] | { data?: T[] }): T[] {

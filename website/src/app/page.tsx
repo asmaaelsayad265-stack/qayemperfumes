@@ -1,12 +1,10 @@
-import PublicShell from "./components/layout/PublicShell";
+﻿import PublicShell from "./components/layout/PublicShell";
 import HeroSection from "./components/sections/HeroSection";
 import BrandStory from "./components/sections/BrandStory";
 import FeaturedPerfumes from "./components/sections/FeaturedPerfumes";
 import LuxuryTestimonials from "./components/sections/LuxuryTestimonials";
 import CategoryCards from "./components/sections/CategoryCards";
 import OffersSection from "./components/sections/OffersSection";
-
-export const dynamic = 'force-dynamic';
 
 export default function Home() {
 

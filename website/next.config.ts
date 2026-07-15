@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+﻿import type { NextConfig } from "next";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -18,7 +18,7 @@ const apiOrigin = (() => {
 
 const scriptSrc = [
   "'self'",
-  // Next.js injects inline bootstrap scripts and Turbopack uses eval in development.
+  "'unsafe-inline'",
   ...(isDevelopment ? ["'unsafe-inline'", "'unsafe-eval'"] : []),
 ].filter(Boolean);
 
@@ -69,11 +69,19 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "qayem-perfumes.example",
+        hostname: "qayemperfumes.vercel.app",
       },
       {
         protocol: "https",
-        hostname: "*.qayem-perfumes.example",
+        hostname: "*.qayemperfumes.vercel.app",
+      },
+      {
+        protocol: "https",
+        hostname: "api.qayemperfumes.com",
+      },
+      {
+        protocol: "https",
+        hostname: "*.qayemperfumes.com",
       },
     ],
   },

@@ -1,0 +1,30 @@
+
+> website@0.1.0 build
+> next build
+
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of d:\قيم للعطور\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * d:\قيم للعطور\website\package-lock.json
+
+▲ Next.js 16.2.10 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 61s
+  Running TypeScript ...
+Failed to type check.
+
+.next/dev/types/validator.ts:41:52
+Type error: Type '"/about"' does not satisfy the constraint 'never'.
+
+  [90m39 |[0m [90m// Validate ../../../src/app/about/page.tsx[0m
+  [90m40 |[0m {
+[31m[1m>[0m [90m41 |[0m   [36mtype[0m __IsExpected<[33mSpecific[0m [36mextends[0m [33mAppPageConfig[0m<[32m"/about"[0m>> = [33mSpecific[0m
+  [90m   |[0m                                                    [31m[1m^[0m
+  [90m42 |[0m   [36mconst[0m handler = {} [36mas[0m [36mtypeof[0m [36mimport[0m([32m"../../../src/app/about/page.js"[0m)
+  [90m43 |[0m   [36mtype[0m __Check = __IsExpected<[36mtypeof[0m handler>
+  [90m44 |[0m   [90m// @ts-ignore[0m
+Next.js build worker exited with code: 1 and signal: null
