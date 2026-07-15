@@ -25,7 +25,7 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  `connect-src 'self' ${apiOrigin}`,
+  `connect-src 'self' ${apiOrigin} https://va.vercel-scripts.com`,
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
