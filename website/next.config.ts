@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const isDevelopment = process.env.NODE_ENV === "development";
+
 const apiOrigin = (() => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL as string | undefined;
 
@@ -16,8 +18,16 @@ const apiOrigin = (() => {
 
 const scriptSrc = [
   "'self'",
-  (process.env.NODE_ENV as string) === "development" ? "'unsafe-eval' 'unsafe-inline'" : "",
+  // Next.js injects inline bootstrap scripts and Turbopack uses eval in development.
+  ...(isDevelopment ? ["'unsafe-inline'", "'unsafe-eval'"] : []),
 ].filter(Boolean);
+
+const connectSrc = [
+  "'self'",
+  apiOrigin,
+  // Permit the Turbopack HMR WebSocket on localhost and LAN development URLs.
+  ...(isDevelopment ? ["ws:", "wss:"] : []),
+].filter((source, index, sources) => sources.indexOf(source) === index);
 
 const contentSecurityPolicy = [
   "default-src 'self'",
@@ -25,12 +35,13 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  `connect-src 'self' ${apiOrigin}`,
+  `connect-src ${connectSrc.join(" ")}`,
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
   "object-src 'none'",
-  "upgrade-insecure-requests",
+  // Do not upgrade localhost HTTP requests while running the development server.
+  ...(!isDevelopment ? ["upgrade-insecure-requests"] : []),
 ].join("; ");
 
 const securityHeaders = [

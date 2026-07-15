@@ -16,6 +16,28 @@ bun dev
 
 Open the URL printed by your dev server with your browser to see the result.
 
+### Content Security Policy
+
+The CSP response header is configured in `next.config.ts`. In development it
+allows Next.js/Turbopack's inline bootstrap scripts, eval-based tooling, and HMR
+WebSocket connections. Production does not enable `unsafe-inline` or
+`unsafe-eval`.
+
+Changes to `next.config.ts` require a development-server restart. To verify the
+active policy, inspect the document request in the browser Network panel (or
+run `curl -I http://localhost:3000`) and check the
+`Content-Security-Policy` response header. If another CSP header is present,
+also check the hosting platform, reverse proxy, or CDN configuration; browsers
+enforce all CSP headers independently.
+
+For production pages that require inline scripts, prefer a request-scoped
+nonce. Generate a cryptographically random nonce in Next.js middleware, add
+`'nonce-<value>'` to `script-src`, forward it in the `x-nonce` request header,
+and apply the same nonce to each intentional `<Script nonce={nonce}>`. The
+nonce must be unique for every response and must not be a build-time or public
+environment variable. Static SHA-256 hashes are an alternative only for inline
+script text that is stable and known in advance.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
