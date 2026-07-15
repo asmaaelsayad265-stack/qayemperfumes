@@ -3,5 +3,4 @@ vendor
 storage/debugbar
 tests
 .phpunit.result.cache
-docker
 docker-compose.yml
