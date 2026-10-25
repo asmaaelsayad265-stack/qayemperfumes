@@ -24,32 +24,27 @@ export default function QuickViewModal({
 }: QuickViewModalProps) {
   const [activeSize, setActiveSize] = useState("100ml");
 
-  // Resolve the product: prefer the passed object, otherwise fetch by id.
-  const [product, setProduct] = useState<Product | null>(productProp ?? null);
+  const [fetchedProduct, setFetchedProduct] = useState<Product | null>(null);
   const [loadingProduct, setLoadingProduct] = useState(false);
+
+  const product = productProp ?? fetchedProduct;
 
   useEffect(() => {
     if (!open) return;
-
-    if (productProp) {
-      setProduct(productProp);
-      return;
-    }
-
+    if (productProp) return;
     if (productId == null) {
-      setProduct(null);
       return;
     }
 
     let cancelled = false;
-    setLoadingProduct(true);
+    const timer = window.setTimeout(() => setLoadingProduct(true), 0);
     productsApi
       .getById(productId)
       .then((fetched) => {
-        if (!cancelled) setProduct(fetched);
+        if (!cancelled) setFetchedProduct(fetched);
       })
       .catch(() => {
-        if (!cancelled) setProduct(null);
+        if (!cancelled) setFetchedProduct(null);
       })
       .finally(() => {
         if (!cancelled) setLoadingProduct(false);
@@ -57,6 +52,7 @@ export default function QuickViewModal({
 
     return () => {
       cancelled = true;
+      window.clearTimeout(timer);
     };
   }, [open, productProp, productId]);
 

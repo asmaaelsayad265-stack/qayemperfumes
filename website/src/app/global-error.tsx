@@ -1,12 +1,7 @@
 "use client";
 
-export default function GlobalError({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
+export default function GlobalError({ _error, reset }: { _error: Error & { digest?: string }; reset: () => void }) {
+  console.error(_error);
   return (
     <html lang="ar" dir="rtl">
       <body>

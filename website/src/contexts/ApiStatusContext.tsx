@@ -30,7 +30,7 @@ export function ApiStatusProvider({ children }: { children: React.ReactNode }) {
       } else {
         setStatus('down');
       }
-    } catch (err) {
+    } catch {
       setStatus('down');
     } finally {
       setLastChecked(new Date().toISOString());
@@ -38,11 +38,13 @@ export function ApiStatusProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    // Run initial check on mount (client-side)
     if (typeof window === 'undefined') return;
-    check();
-    const timer = window.setInterval(() => check(), 30 * 1000); // re-check every 30s
-    return () => window.clearInterval(timer);
+    const initial = window.setTimeout(() => check(), 0);
+    const timer = window.setInterval(() => check(), 30 * 1000);
+    return () => {
+      window.clearTimeout(initial);
+      window.clearInterval(timer);
+    };
   }, []);
 
   const value: ApiStatusContextValue = {

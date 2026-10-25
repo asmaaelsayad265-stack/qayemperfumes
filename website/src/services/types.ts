@@ -1,7 +1,7 @@
 export type ApiError = {
   message: string;
   status?: number;
-  details?: any;
+  details?: unknown;
 };
 
 export type PaginatedResponse<T> = {

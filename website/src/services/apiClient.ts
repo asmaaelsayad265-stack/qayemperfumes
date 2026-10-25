@@ -7,8 +7,9 @@ const getBaseUrl = () => {
   try {
     const env = process.env.NEXT_PUBLIC_API_URL;
     if (env && env.length > 0) return env;
-  } catch (_) {}
-  return "/api/v1";
+  } catch {
+    return "/api/v1";
+  }
 };
 
 const apiClient: AxiosInstance = axios.create({
@@ -37,7 +38,7 @@ const normalizeAxiosError = (err: unknown): ApiError => {
   if ((err as AxiosError).isAxiosError) {
     const e = err as AxiosError;
     const status = e.response?.status;
-    const data = e.response?.data;
+const data = e.response?.data as Record<string, unknown> | undefined;
     const message =
       (data && (data.message || data.error || data.detail)) || e.message || "Network error";
     return { message: String(message), status, details: data };
@@ -66,7 +67,7 @@ export const setAuthToken = (token: string | null) => {
 
 export const clearAuthToken = () => setAuthToken(null);
 
-export const apiGet = async <T = any>(url: string, config?: AxiosRequestConfig) => {
+export const apiGet = async <T = unknown>(url: string, config?: AxiosRequestConfig) => {
   try {
     const res = await apiClient.get<T>(url, config);
     return res.data as T;
@@ -75,7 +76,7 @@ export const apiGet = async <T = any>(url: string, config?: AxiosRequestConfig) 
   }
 };
 
-export const apiPost = async <T = any>(url: string, data?: any, config?: AxiosRequestConfig) => {
+export const apiPost = async <T = unknown>(url: string, data?: unknown, config?: AxiosRequestConfig) => {
   try {
     const res = await apiClient.post<T>(url, data, config);
     return res.data as T;
@@ -84,7 +85,7 @@ export const apiPost = async <T = any>(url: string, data?: any, config?: AxiosRe
   }
 };
 
-export const apiPut = async <T = any>(url: string, data?: any, config?: AxiosRequestConfig) => {
+export const apiPut = async <T = unknown>(url: string, data?: unknown, config?: AxiosRequestConfig) => {
   try {
     const res = await apiClient.put<T>(url, data, config);
     return res.data as T;
@@ -93,7 +94,7 @@ export const apiPut = async <T = any>(url: string, data?: any, config?: AxiosReq
   }
 };
 
-export const apiDelete = async <T = any>(url: string, config?: AxiosRequestConfig) => {
+export const apiDelete = async <T = unknown>(url: string, config?: AxiosRequestConfig) => {
   try {
     const res = await apiClient.delete<T>(url, config);
     return res.data as T;

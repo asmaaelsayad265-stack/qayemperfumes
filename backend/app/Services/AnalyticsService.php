@@ -79,7 +79,7 @@ class AnalyticsService
     $sixMonthsAgo = now()->subMonths(5)->startOfMonth();
 
     $monthlyData = Order::select(
-      DB::raw('DATE_FORMAT(created_at, "%Y-%m") as month'),
+      DB::raw('SUBSTR(created_at, 1, 7) as month'),
       DB::raw('SUM(total) as revenue'),
       DB::raw('COUNT(*) as orders')
     )
@@ -89,7 +89,7 @@ class AnalyticsService
       ->get()
       ->keyBy('month');
 
-    return collect(range(5, 0))->map(function (int $monthsAgo) {
+    return collect(range(5, 0))->map(function (int $monthsAgo) use ($monthlyData) {
       $month = now()->subMonths($monthsAgo)->format('Y-m');
       $data = $monthlyData->get($month);
 

@@ -111,7 +111,7 @@ function getApiClient(): AxiosInstance {
       }
 
       const status = error.response.status;
-      let message = error.response.data?.message || 'حدث خطأ غير متوقع.';
+      let message = error.response?.data.message || 'حدث خطأ غير متوقع.';
 
       switch (status) {
         case 401:
@@ -126,15 +126,15 @@ function getApiClient(): AxiosInstance {
           break;
         case 403: message = 'ليست لديك صلاحية لتنفيذ هذا الإجراء.'; break;
         case 404: message = 'العنصر المطلوب غير موجود.'; break;
-        case 422: message = formatValidationMessage(error.response.data?.errors); break;
+        case 422: message = formatValidationMessage(error.response?.data.errors); break;
         case 429: message = 'تم إرسال طلبات كثيرة. يرجى الانتظار ثم المحاولة مرة أخرى.'; break;
         case 500: message = 'حدث خطأ في الخادم. يرجى المحاولة لاحقا.'; break;
-        default: message = error.response.data?.message || `حدث خطأ برقم ${status}.`;
+        default: message = error.response?.data.message || `حدث خطأ برقم ${status}.`;
       }
 
       return Promise.reject({
         message,
-        errors: error.response.data?.errors,
+        errors: error.response?.data.errors,
         statusCode: status,
       } as ApiError);
     },
@@ -143,5 +143,5 @@ function getApiClient(): AxiosInstance {
   return _apiClient;
 }
 
-const apiClient = new Proxy({}, { get(_, prop) { const client = getApiClient(); const val = client[prop]; return typeof val === "function" ? val.bind(client) : val; } }); export default apiClient;
+const apiClient = new Proxy({} as AxiosInstance, { get(_, prop) { const client = getApiClient(); const val = (client as unknown as Record<string | symbol, unknown>)[prop]; return typeof val === "function" ? val.bind(client) : val; } }) as AxiosInstance; export default apiClient;
 
