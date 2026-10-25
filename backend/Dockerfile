@@ -16,7 +16,8 @@ RUN apk add --no-cache \
     bash \
     curl \
     git \
-    unzip
+    unzip \
+    gettext
 
 # Configure PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
@@ -60,6 +61,10 @@ COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 # Copy supervisor configuration
 COPY docker/supervisord.conf /etc/supervisord.conf
 
+# Copy entrypoint
+COPY docker/entrypoint.sh /docker/entrypoint.sh
+RUN chmod +x /docker/entrypoint.sh
+
 # Ensure php-fpm listens on TCP 127.0.0.1:9000 so nginx fastcgi_pass matches.
 # The default pool may use a Unix socket depending on the image; force TCP to
 # guarantee nginx <-> php-fpm connectivity. `|| true` keeps the build safe if
@@ -78,4 +83,4 @@ RUN mkdir -p /var/log/supervisor \
 EXPOSE 80
 
 # Start supervisord
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["/docker/entrypoint.sh"]

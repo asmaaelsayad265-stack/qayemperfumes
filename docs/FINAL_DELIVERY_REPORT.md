@@ -43,6 +43,40 @@ Backend: APP_KEY, APP_URL, DB_*, FRONTEND_URL, SANCTUM_STATEFUL_DOMAINS, SESSION
 - A previous `next build` may still be running (node processes present). No unrelated process was terminated. Re-run a clean build after it completes.
 
 
+## Final static review
+- Docker config paths and process definitions are internally consistent.
+- `envsubst '$PORT'` preserves Nginx variables and only substitutes PORT.
+- No POSIX shell or Docker available; shell syntax and container build/tests blocked.
+- Laravel tests: 5 passed (31 assertions). Frontend lint/type-check/build previously PASS.
+
+## Remaining deployment verification steps
+1. Build Docker image in an environment with Docker and run `nginx -t`.
+2. Start container with `PORT` set; verify `/up` returns 200 through Nginx.
+3. Deploy to Railway and verify actual service URL and DNS.
+4. Set Vercel env vars and test E2E product/cart/checkout/order/auth/admin flows.
+
+## Shell validation limitation
+- No POSIX shell or WSL distribution available locally; `sh -n` could not be executed. Script reviewed manually only.
+- Laravel tests: 5 passed, 31 assertions.
+
+## Docker port fix validation (local)
+- envsubst uses `$PORT` only, preserving Nginx variables (`$uri`, `$host`, etc.).
+- Dockerfile copies nginx.conf to `/etc/nginx/http.d/default.conf`; entrypoint templates same path.
+- Shell syntax could not be checked locally (no `sh`/Docker). Docker unavailable; no container build/test performed.
+- Production healthcheck remains unverified.
+
+## Docker/Railway port fix (local code)
+- Nginx now uses `listen ${PORT};` with envsubst defaulting to 80 via entrypoint.sh.
+- Dockerfile installs gettext, copies entrypoint, CMD runs entrypoint.
+- Not production-tested; requires real Railway deployment.
+
+## Deployment audit findings
+- Vercel (frontend) must define `NEXT_PUBLIC_API_URL` (deployed backend `/api/v1`, never localhost), `NEXT_PUBLIC_SITE_URL`.
+- Railway (backend) must define DB_*, APP_KEY, APP_URL, FRONTEND_URL, SANCTUM_STATEFUL_DOMAINS, SESSION_DOMAIN; frontend `NEXT_PUBLIC_*` vars do not belong on Laravel service.
+- Docker/nginx listens on fixed port 80 and PHP-FPM on 127.0.0.1:9000; Railway typically injects `PORT`. Fixed port 80 is a likely historical healthcheck/port-binding mismatch (not confirmed without Railway logs).
+- `/up` healthcheck renders a Blade view; Dockerfile caches views to satisfy it.
+- No Railway service URL found in repository; project owner must provide Railway dashboard URL/service domain.
+
 ## Verified results (final local)
 - Frontend lint: PASS (exit 0).
 - Frontend type-check: PASS (exit 0).
